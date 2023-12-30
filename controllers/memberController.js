@@ -37,12 +37,12 @@ memberController.loginProcess = async (req, res) => {
     }
 };
 
-memberController.createToken = (result) => {
+memberController.createToken = (user) => {
 	try {
 		const upload_data = {
-			_id: result._id,
-			mb_nick: result.mb_nick,
-			mb_type: result.mb_type
+			_id: user._id,
+			mb_nick: user.mb_nick,
+			mb_type: user.mb_type
 		};
 
 		const token = jwt.sign(
