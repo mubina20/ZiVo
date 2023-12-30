@@ -2,6 +2,7 @@ MemberModel = require('../schema/member.model');
 
 const bcrypt = require('bcryptjs');
 const Definer = require('../lib/mistake');
+const assert = require('assert');
 
 class Member {
     constructor() {
@@ -30,6 +31,31 @@ class Member {
             throw err;
         }
     }    
+
+    async loginData(loginData) { 
+        try{
+            const member = await this.memberModel 
+            .findOne( 
+                {mb_nick: loginData.mb_nick}, 
+                {mb_nick: 1, mb_password: 1}) 
+            .exec(); 
+            assert.ok(member, Definer.authentication_error3); 
+
+            const isMatch = await bcrypt.compare( 
+                loginData.mb_password,  
+                member.mb_password  
+            );
+            assert.ok(isMatch, Definer.authentication_error4); 
+
+            return await this.memberModel
+                .findOne({
+                    mb_nick: loginData.mb_nick 
+                })
+                .exec();
+        } catch(err) {
+            throw err;
+        }
+    }
 };
 
 module.exports = Member;

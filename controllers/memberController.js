@@ -30,7 +30,19 @@ memberController.signupProcess = async (req, res) => {
 memberController.loginProcess = async (req, res) => {
     try{
         console.log("POST: Login");
+        const data = req.body; 
 
+        const member = new Member();
+        const result = await member.loginData(data);
+
+        const token = memberController.createToken(result);
+        // console.log("TOKEN:::", token);
+        res.cookie('access_token', token, {
+			maxAge: 6 * 3600 * 1000,
+			httpOnly: false,
+		});
+
+        res.json({state: 'success', data: result});
     } catch(error) {
         console.log(`ERROR: login, ${error}`);
         res.json({state: "fail", message: "Login error!!"});
@@ -56,5 +68,5 @@ memberController.createToken = (user) => {
 	} catch (error) {
         console.log(`JWT ERROR: ${error}`)
 		throw error;
-	}
+	};
 };
