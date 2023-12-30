@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 // const router_bssr = require('./router_bssr'); // BSSR
-// const router = require('./router'); // SPA
+const router = require('./router'); // SPA
 
 // MongoDB connect
 let session = require('express-session');  
@@ -42,6 +42,6 @@ app.set("view engine", "ejs");
 
 // 4: Routing code  
 // app.use("/admin", router_bssr); // BSSR
-// app.use("/", router); // SPA
+app.use("/", router); // SPA
 
 module.exports = app; 

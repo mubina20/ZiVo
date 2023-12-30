@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const { 
     member_status_enums,
-    member_type_enums,
-    member_story_enums
+    member_type_enums
 } = require('../lib/config');
 
 const memberSchema = new mongoose.Schema({
@@ -15,7 +14,7 @@ const memberSchema = new mongoose.Schema({
         required: true
     },
     mb_birthday: {
-        type: Date,
+        type: Number,
         required: true
     },
     mb_gender: {
