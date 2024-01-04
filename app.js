@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-// const router_bssr = require('./router_bssr'); // BSSR
+const router_bssr = require('./router_bssr'); // BSSR
 const router = require('./router'); // SPA
 
 // MongoDB connect
@@ -41,7 +41,7 @@ app.set("views", "views");
 app.set("view engine", "ejs");
 
 // 4: Routing code  
-// app.use("/admin", router_bssr); // BSSR
+app.use("/admin", router_bssr); // BSSR
 app.use("/", router); // SPA
 
 module.exports = app; 

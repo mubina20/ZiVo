@@ -56,6 +56,21 @@ class Member {
             throw err;
         }
     }
+
+    async getAllMembersData() {
+		try {
+			const result = await this.memberModel
+                .find({
+                    mb_type: { $in: ['USER', 'GROUP_OWNER'] }
+                })
+                .exec();
+
+			assert(result, Definer.general_err1);
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	}
 };
 
 module.exports = Member;
