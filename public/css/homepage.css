@@ -5,7 +5,7 @@
   font-family: 'poppins', 'sans-serif';
 }
 .home_container{
-  margin-top: -100px;
+  margin-top: -102px;
   padding: 0 200px;
   color: #fff;
   display: flex;
@@ -22,7 +22,7 @@
   font-weight: 900;
   cursor: pointer;
   text-shadow: 0 0 30px black;
-  padding-left: 50px;
+  padding-left: 100px;
   padding-top: 20px;
   letter-spacing: -2px;
 }

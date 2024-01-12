@@ -1,12 +1,14 @@
 <%- include('includes/header') %>
 
 <body>
-    <% if(!member) { %>
-        <%- include('login') %>
+    <% if(member && member.mb_type === "ADMIN") { %>
+        This is admin home page!!!!!!!!!!!!!
+        <a class="nav-link" href="/admin/logout">Logout</a>
 
     <% } else { %>
-        This is Admin homepage
+        <%- include('login') %>
     <% } %>
+    
 </body>
 
 <%- include('includes/footer') %>
