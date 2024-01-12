@@ -8,8 +8,14 @@ let memberController = module.exports;
 memberController.signupProcess = async (req, res) => {
     try{
         console.log("POST: Signup");
+        // assert.ok(req.file, Definer.general_error1);
+        
 
-        const data = req.body; 
+        console.log("req.file", req.file);
+        console.log("req.body", req.body);
+
+        const data = req.body;
+        // data.mb_image = req.file.path; 
 
         const member = new Member(); 
         const new_member = await member.signupData(data); 
