@@ -24,7 +24,7 @@ adminController.loginProcess = async (req, res) => {
 
     } catch(err){
         console.log(`ERROR: Login Process! ${err.message}`);
-        // res.json({state: 'fail!', message: "Login Process!"});
+
         const error = {
             state: "Fail",
             message: "Login qilishda xatolik bo'ldi!"
@@ -40,7 +40,12 @@ adminController.login = async (req, res) => {
         res.render("login");
     } catch(err) {
         console.log(`ERROR: ADMIN HomePage! ${err.message}`);
-        res.json({state: 'fail!', message: "ERROR: ADMIN HomePage"});
+        
+        const error = {
+            state: "Fail",
+            message: "Login qilishda xatolik bo'ldi!"
+        }
+        res.render("error", { error: error });
     }
 };
 
@@ -51,7 +56,12 @@ adminController.home  = async (req, res) => {
         res.render("admin-homepage");
     } catch(err) {
         console.log(`ERROR: ADMIN HomePage! ${err.message}`);
-        res.json({state: 'fail!', message: "ERROR: ADMIN HomePage"});
+        
+        const error = {
+            state: "Fail",
+            message: "HomePagega kirishda xatolik bo'ldi!"
+        }
+        res.render("error", { error: error });
     }
 };
 
@@ -65,7 +75,12 @@ adminController.getAllMembers = async (req, res) => {
 		res.render('adminPage', { members_data: members_data });
     } catch(err) {
         console.log(`ERROR: ADMIN Page! ${err.message}`);
-        res.json({state: 'fail!', message: "ERROR: ADMIN Page"});
+        
+        const error = {
+            state: "Fail",
+            message: "Admin Pagega kirishda xatolik bo'ldi!"
+        }
+        res.render("error", { error: error });
     }
 };
 
