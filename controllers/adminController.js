@@ -18,17 +18,33 @@ adminController.loginProcess = async (req, res) => {
         
         req.session.save(function() { 
             result.mb_type === 'ADMIN' 
-            ? res.redirect("/admin") 
-            : res.redirect("/admin")
+                ? res.redirect("/admin/home") 
+                : res.redirect("/admin");
         });
 
     } catch(err){
         console.log(`ERROR: Login Process! ${err.message}`);
-        res.json({state: 'fail!', message: "Login Process!"});
+        // res.json({state: 'fail!', message: "Login Process!"});
+        const error = {
+            state: "Fail",
+            message: "Login qilishda xatolik bo'ldi!"
+        }
+        res.render("error", { error: error });
     }
 };
 
-adminController.homepage = async (req, res) => {
+adminController.login = async (req, res) => {
+    try{
+        console.log("GET: Admin HomePage");
+
+        res.render("login");
+    } catch(err) {
+        console.log(`ERROR: ADMIN HomePage! ${err.message}`);
+        res.json({state: 'fail!', message: "ERROR: ADMIN HomePage"});
+    }
+};
+
+adminController.home  = async (req, res) => {
     try{
         console.log("GET: Admin HomePage");
 
