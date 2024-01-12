@@ -1,10 +1,12 @@
 <%- include('includes/header') %>
-<link rel="stylesheet" href="/css/homepage.css">
 
 <body>
-    Hello, this is ADMIN HomePge!!
-</body>
+    <% if(!member) { %>
+        <%- include('login') %>
 
-<script src="/js/homepage.js"></script>
+    <% } else { %>
+        This is Admin homepage
+    <% } %>
+</body>
 
 <%- include('includes/footer') %>

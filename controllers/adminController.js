@@ -18,7 +18,7 @@ adminController.loginProcess = async (req, res) => {
         
         req.session.save(function() { 
             result.mb_type === 'ADMIN' 
-            ? res.redirect("/admin/adminpage") 
+            ? res.redirect("/admin") 
             : res.redirect("/admin")
         });
 

@@ -1,0 +1,49 @@
+<%- include('includes/header') %>
+<link rel="stylesheet" href="/css/homepage.css">
+
+<body>
+    <div class="logo">
+        <a href="/admin">
+            <span>Z</span>
+            I
+            <span>V</span>
+            O
+        </a>
+    </div>
+    
+    <div class="home_container">
+        <div class="left_container">
+            <div class="left_content">
+                <h1>Hello, Admin</h3>
+                <h3>Welcome to Zivo!</h2>
+                <p>Login now and continue checking Ziva's members, and be aware of the news in Zivo!</p>
+            </div>
+        </div>
+        
+        <div class="login_container">
+            <div class="login_box">
+                <span class="borderLine"></span>
+                <form action="/admin/login", method="POST">
+                    <h2>Login</h2>
+                    <div class="input_box">
+                        <input type="text" name="mb_nick" required="required">
+                        <span>Username</span>
+                        <i></i>
+                    </div>
+                    <div class="input_box">
+                        <input type="password" name="mb_password" required="required">
+                        <span>Password</span>
+                        <i></i>
+                    </div>
+                    <div class="forgot_password">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="/js/homepage.js"></script>
+<%- include('includes/footer') %>
