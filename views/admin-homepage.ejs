@@ -2,8 +2,8 @@
 
 <body>
     <% if(member && member.mb_type === "ADMIN") { %>
-        This is admin home page!!!!!!!!!!!!!
-        <a class="nav-link" href="/admin/logout">Logout</a>
+        <%- include('home') %>
+        
 
     <% } else { %>
         <%- include('login') %>

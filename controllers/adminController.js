@@ -38,7 +38,7 @@ adminController.loginProcess = async (req, res) => {
 
 adminController.home = async (req, res) => {
     try{
-        console.log("GET: Admin HomePage");
+        console.log("GET: Admin entered the HomePage");
 
         res.render("admin-homepage");
     } catch(err) {
@@ -54,12 +54,12 @@ adminController.home = async (req, res) => {
 
 adminController.getAllMembers = async (req, res) => {
     try{
-        console.log("GET: Admin Page");
+        console.log("GET: Admin entered the Members page!");
 
         const member = new Member();
 		const members_data = await member.getAllMembersData();
 
-		res.render('adminPage', { members_data: members_data });
+		res.render('members-page', { members_data: members_data });
     } catch(err) {
         console.log(`ERROR: ADMIN Page! ${err.message}`);
         
@@ -87,7 +87,7 @@ adminController.validateAdmin = (req, res, next) => {
 
 adminController.logout = (req, res) => {
     try{
-        console.log("GET: kimdir logout qilmoqda");
+        console.log("GET: Admin has logged out");
 
         req.session.destroy(function() {
             res.redirect("/admin");

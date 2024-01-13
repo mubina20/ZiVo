@@ -76,6 +76,7 @@ body{
     font-size: 2em;
     max-width: 600px;
     position: relative;
+    margin-bottom: 60px;
 }
 
 .content h4:after{
@@ -90,7 +91,7 @@ body{
 
 .content p{
     font-size: 1.2em;
-    color: #62d5e9;
+    color: #69a6ce;
 }
 
 .content .btns{
@@ -114,6 +115,8 @@ body{
 .content .btns a:hover{
     background: aqua;
     color: #fff;
+    font-size: 20px;
+    font-weight: 900;
     box-shadow: 0 0 6px 5px aqua;
     border: none;
 }

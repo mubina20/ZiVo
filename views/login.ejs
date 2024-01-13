@@ -1,5 +1,5 @@
 <%- include('includes/header') %>
-<link rel="stylesheet" href="/css/homepage.css">
+<link rel="stylesheet" href="/css/login.css">
 
 <body>
     <div class="logo">
@@ -14,36 +14,32 @@
     <div class="home_container">
         <div class="left_container">
             <div class="left_content">
-                <h1>Hello, Admin</h3>
-                <h3>Welcome to Zivo!</h2>
+                <h1>Hello, <span>Admin</span></h3>
+                <h3>Welcome to <span>ZIVo!</span></h2>
                 <p>Login now and continue checking Zivo's members, and be aware of the news in Zivo!</p>
             </div>
         </div>
-        
-        <div class="login_container">
-            <div class="login_box">
-                <span class="borderLine"></span>
-                <form action="/admin/login", method="POST">
-                    <h2>Login</h2>
-                    <div class="input_box">
-                        <input type="text" name="mb_nick" required="required">
-                        <span>Username</span>
-                        <i></i>
-                    </div>
-                    <div class="input_box">
-                        <input type="password" name="mb_password" required="required">
-                        <span>Password</span>
-                        <i></i>
-                    </div>
-                    <div class="forgot_password">
-                        <a href="#">Forgot Password?</a>
-                    </div>
-                    <input type="submit" value="Login">
-                </form>
-            </div>
-        </div>
+
+        <div class="login-box">
+            <h2>Login</h2>
+            <form action="/admin/login" method="POST" autocomplete="off">
+                <div class="user-box">
+                    <input type="text" name="mb_nick" required>
+                    <label>Username</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" name="mb_password" required>
+                    <label>Password</label>
+                </div>
+                <a href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <input class="btn" type="submit" value="Login">
+                </a>
+            </form>
     </div>
 </body>
 
-<script src="/js/homepage.js"></script>
 <%- include('includes/footer') %>
