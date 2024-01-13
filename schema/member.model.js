@@ -19,7 +19,7 @@ const memberSchema = new mongoose.Schema({
     },
     mb_gender: {
         type: String,
-        required: true
+        required: false
     },
     mb_nick: {
         type: String,
