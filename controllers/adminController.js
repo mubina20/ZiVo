@@ -87,7 +87,7 @@ adminController.validateAdmin = (req, res, next) => {
 
 adminController.logout = (req, res) => {
     try{
-        console.log("GET: Admin has logged out");
+        console.log("GET: Admin Logout!");
 
         req.session.destroy(function() {
             res.redirect("/admin");
