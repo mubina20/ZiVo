@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const { 
     member_status_enums,
-    member_type_enums
+    member_type_enums,
+    member_gender_enums
 } = require('../lib/config');
 
 const memberSchema = new mongoose.Schema({
@@ -19,7 +20,13 @@ const memberSchema = new mongoose.Schema({
     },
     mb_gender: {
         type: String,
-        required: false
+        required: false,
+        required: false,
+        default: "UNKNOWN", 
+        enum: {
+            values: member_gender_enums, 
+            message: "{VALUES} is not among permitted values!"
+        }
     },
     mb_nick: {
         type: String,
