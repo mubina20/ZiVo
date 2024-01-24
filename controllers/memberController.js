@@ -76,3 +76,54 @@ memberController.createToken = (user) => {
 		throw error;
 	};
 };
+
+memberController.getChosenMember = async (req, res) => {
+	try {
+		console.log('GET: One Member chosen!');
+
+		const id = req.params.id;
+		const member = new Member();
+		const result = await member.getChosenMemberData(req.member, id);
+
+		// console.log('result:::', result);
+		res.json({ state: 'success', data: result });
+	} catch (err) {
+		console.log(`ERORR, cont/getChosenMember, ${err.message}`);
+
+		const error = {
+            state: "Fail",
+            message: err.message
+        }
+        res.render("error", { error: error });
+	}
+};
+
+memberController.getAllMembers = async (req, res) => {
+    try{
+        console.log("GET: getAllMembers");
+
+        const member = new Member();
+		const members_data = await member.getAllMembersData();
+
+		res.json({state: "success", data: members_data});
+    } catch(err) {
+        console.log(`ERROR:getAllMembers! ${err.message}`);
+        
+        const error = {
+            state: "fail",
+            message: "getAllMembers"
+        }
+        res.render("error", { error: error });
+    }
+}
+
+memberController.retrieveAuthMember = async (req, res, next) => {
+	try {
+		const token = req.cookies['access_token'];
+		req.member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
+		next();
+	} catch (err) {
+		console.log(`ERORR: retrieveAuthMember, ${err.message}`);
+		next();
+	}
+};
