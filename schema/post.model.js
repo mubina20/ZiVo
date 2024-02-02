@@ -15,7 +15,7 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: {
-            value: post_type_enums, 
+            values: post_type_enums, 
             message: "{VALUES} is not among permitted values!"
         }
     },
@@ -24,13 +24,18 @@ const postSchema = new mongoose.Schema({
         required: true,
         default: "ACTIVE",
         enum: {
-            value: post_status_enums,
+            values: post_status_enums,
             message: "{VALUES} is not among permitted values!"
         }
     },
     post_content: {
-        type: Array,
-        required: true
+        type: String,
+        required: false
+    },
+    product_images: { 
+        type: Array, 
+        required: false, 
+        default: [] 
     },
     post_description: {
         type: String,
