@@ -140,6 +140,42 @@ class Follow {
             throw err;
         }
     };
+
+    // Member's Followers
+    async getMemberFollowersData(member, inquery) {
+        try {
+            const follow_id = shapeIntoMongooseObjectId(inquery.mb_id),
+                page = inquery.page * 1,
+                limit = inquery.limit * 1;
+    
+            let aggregateQuery = [
+                { $match: { follow_id: follow_id } },
+                { $sort: { createdAt: -1 } },
+                { $skip: (page - 1) * limit },
+                { $limit: limit },
+                {
+                    $lookup: {
+                        from: "members",
+                        localField: "subscriber_id",
+                        foreignField: "_id",
+                        as: "subscriber_member_data"
+                    }
+                },
+                { $unwind: "$subscriber_member_data" }
+            ];
+    
+            if (member && member._id === inquery.mb_id) { 
+                aggregateQuery.push(lookup_auth_member_following(follow_id, 'follows'));
+            }
+        
+            const result = await this.followModel.aggregate(aggregateQuery).exec();
+            assert.ok(result, Definer.follow_error3);
+
+            return result;
+        } catch (err) {
+            throw err;
+        }
+    }
 };
 
 module.exports = Follow;
