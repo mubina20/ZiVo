@@ -3,6 +3,7 @@ const router = Router();
 
 const memberController = require('./controllers/memberController');
 const postController = require('./controllers/postController');
+const followController = require('./controllers/followController');
 
 const uploader_members = require('./utils/upload-multer')("members");
 const uploader_posts = require('./utils/upload-multer')("posts");
@@ -21,12 +22,19 @@ router.get(
     memberController.getAllMembers
 );
 
-// POST
+//** */ POST related routers **//
 router.post(
     "/post/create",
     memberController.retrieveAuthMember,
     uploader_posts.array("post_images"),
     postController.createPost
-)
+);
+
+//** FOLLOWING related routers **//
+router.post(
+    "/follow/subscribe",
+    memberController.retrieveAuthMember,
+    followController.subscribe
+);
 
 module.exports = router;
