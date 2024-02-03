@@ -14,6 +14,7 @@ class Follow {
         this.followModel = FollowModel;
     }
 
+    // Subscribe
     async subscribeData(member, data) {
         try{
             assert.ok(member._id !== data.mb_id, Definer.follow_error1);
@@ -43,6 +44,7 @@ class Follow {
         }
     };
 
+    // Logic of saving to DataBase
     async createSubscriptionData(follow_id, subscriber_id) {
         try{
             const new_follow = new this.followModel({
@@ -58,6 +60,7 @@ class Follow {
         }
     };
 
+    // Following & Subscriber count
     async modifyMemberFollowCounts(mb_id, type, modifier) {
         try{
             if(type === 'follow_change'){
@@ -82,6 +85,27 @@ class Follow {
         }
     };
 
+    // UnSubscriber
+    async unsubscribeData(member, data) {
+        try{
+            const subscriber_id = shapeIntoMongooseObjectId(member?._id);
+            const follow_id = shapeIntoMongooseObjectId(data.mb_id);
+
+            const result = await this.followModel.findOneAndDelete({
+                follow_id: follow_id,
+                subscriber_id: subscriber_id
+            });
+
+            assert.ok(result, Definer.general_error1);
+
+            await this.modifyMemberFollowCounts(follow_id, 'subscriber_change', -1);
+            await this.modifyMemberFollowCounts(subscriber_id, 'follow_change', -1);
+
+            return true;
+        } catch(err) {
+            throw err;
+        }
+    };
 };
 
 module.exports = Follow;
