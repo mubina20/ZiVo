@@ -35,3 +35,18 @@ followController.unsubscribe = async (req, res) => {
         res.json({state: 'fail', data: "There was an error while UnSubscribing!"});
     }
 };
+
+followController.getMemberFollowings = async (req, res) => {
+    try{
+        console.log("GET: User is viewing followings!");
+        // console.log("QUERY:::", req.query);
+
+        const follow = new Follow();
+        const result = await follow.getMemberFollowingsData(req.query);
+
+        res.json({state: "success", data: result})
+    } catch(err) {
+        console.log(`ERROR: getMemberFollowings! ${err.message}`);
+        res.json({state: "fail", message: "There was an error viewing the Following!"})
+    }
+};
