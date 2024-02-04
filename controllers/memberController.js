@@ -115,7 +115,28 @@ memberController.getAllMembers = async (req, res) => {
         }
         res.render("error", { error: error });
     }
-}
+};
+
+memberController.likeMemberChosen = async (req, res) => {
+	try {
+		console.log('POST: User liked! (likeMemberChosen)');
+
+		assert.ok(req.member, Definer.authentication_error5);
+		
+		const like_ref_id = req.body.like_ref_id;
+		const group_type = req.body.group_type;
+		// console.log("LIKE_REF_ID:::", like_ref_id);
+		// console.log("GROUP_TYPE:::", group_type);
+
+		const member = new Member();
+		const result = await member.likeChosenItemByMember(req.member, like_ref_id, group_type);
+
+		res.json({ state: 'success', data: result });
+	} catch (err) {
+		console.log(`ERORR: likeMemberChosen!, ${err.message}`);
+		res.json({state: 'fail!', message: "There was an error while trying to like"});
+	}
+};
 
 memberController.retrieveAuthMember = async (req, res, next) => {
 	try {

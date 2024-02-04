@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const Definer = require('../lib/mistake');
 const assert = require('assert');
 const { shapeIntoMongooseObjectId } = require('../lib/config');
+const Like = require('./Like');
 
 class Member {
     constructor() {
@@ -100,6 +101,38 @@ class Member {
 			throw err;
 		}
 	}
+
+    async likeChosenItemByMember(member, like_ref_id, group_type) {
+        try{
+            const mb_id = shapeIntoMongooseObjectId(member._id);
+            like_ref_id = shapeIntoMongooseObjectId(like_ref_id);
+
+            const like = new Like(mb_id);
+            const isValid = await like.validateTargetItem(like_ref_id, group_type);
+            assert.ok(isValid, Definer.general_error2);
+            // console.log("isValid:::", isValid);
+
+            const doesExist = await like.checkLikeExistence(like_ref_id);
+            // console.log("doesExist:::", doesExist);
+
+            let data = doesExist
+				? await like.removeMemberLike(like_ref_id, group_type)
+				: await like.insertMemberLike(like_ref_id, group_type);
+			assert.ok(data, Definer.general_error1);
+            // console.log("DATA:::", data);
+
+			const result = {
+				like_group: data.like_group,
+				like_ref_id: data.like_ref_id,
+				like_status: doesExist ? 0 : 1,
+			};
+            // console.log("RESULT:::", result);
+
+			return result;
+        } catch(err) {
+            throw err;
+        }
+    };
 };
 
 module.exports = Member;

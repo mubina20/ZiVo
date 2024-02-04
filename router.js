@@ -21,8 +21,13 @@ router.get(
     '/members', 
     memberController.getAllMembers
 );
+router.post(
+    "/member-liked",
+    memberController.retrieveAuthMember,
+    memberController.likeMemberChosen
+);
 
-//** */ POST related routers **//
+//** POST related routers **//
 router.post(
     "/post/create",
     memberController.retrieveAuthMember,
