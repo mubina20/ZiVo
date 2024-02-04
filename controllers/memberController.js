@@ -55,6 +55,12 @@ memberController.loginProcess = async (req, res) => {
     }
 };
 
+memberController.logout = (req, res) => {
+    console.log('POST: LOGOUT!');
+	res.cookie('access_token', null, {maxAge: 0, httpOnly: true});
+    res.send("successfully LogOut");
+};
+
 memberController.createToken = (user) => {
 	try {
 		const upload_data = {

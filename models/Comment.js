@@ -29,26 +29,6 @@ class Comment {
             throw err;
         }
     };
-
-    async editChosenCommentData(member, data) {
-        try{
-            const mb_id = shapeIntoMongooseObjectId(member._id),
-                comment_id = shapeIntoMongooseObjectId(data.comment_id),
-                newComment = data.newComment;
-
-            const result = await this.commentModel.findOneAndUpdate(
-                { mb_id: mb_id, _id: comment_id },
-                { comment: newComment },
-                { new: true }
-            );
-            // console.log("RESULT:::", result);
-
-            assert.ok(result, Definer.comment_error2);
-            return result;
-        } catch(err) {
-            throw err;
-        }
-    };
 };
 
 module.exports = Comment;

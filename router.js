@@ -11,6 +11,7 @@ const uploader_posts = require('./utils/upload-multer')("posts");
 
 router.post('/signup', memberController.signupProcess);
 router.post('/login', memberController.loginProcess);
+router.post('/logout', memberController.logout);
 
 //** MEMBER related routers **//
 router.get(
@@ -59,11 +60,6 @@ router.post(
     "/comment/createComment",
     memberController.retrieveAuthMember,
     commentController.createComment
-);
-router.post(
-    "/comment/editComment",
-    memberController.retrieveAuthMember,
-    commentController.editChosenComment
 );
 
 module.exports = router;
