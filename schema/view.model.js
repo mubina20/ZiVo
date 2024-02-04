@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { like_view_group_list, post_id_enum_list } = require('../lib/config.js');
+const { like_view_group_list } = require('../lib/config.js');
 const Schema = mongoose.Schema;
 
 const viewSchema = new mongoose.Schema(
@@ -18,13 +18,6 @@ const viewSchema = new mongoose.Schema(
 			enum: { 
                 values: like_view_group_list 
             }
-		},
-		post_id: {
-			type: String,
-			required: false,
-			enum: {
-				values: post_id_enum_list, 
-			}
 		}
 	},
 	{ timestamps: { createdAt: true } },

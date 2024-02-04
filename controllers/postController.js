@@ -32,6 +32,21 @@ postController.createPost = async (req, res) => {
 	}
 };
 
+postController.getChosenPost = async (req, res) => {
+    try {
+        console.log("GET: one post is choosed!");
+
+        const id = req.params.id;
+        const post = new Post();
+        const result = await post.getChosenPostData(req.member, id);   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: getChosenPost!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error choosing the Post!"});
+    }
+};
+
 postController.validateAuthUser = (req, res, next) => {
     if(req.session?.member?.mb_type === "USER") {
         req.member = req.session.member;

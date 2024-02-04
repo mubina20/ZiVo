@@ -5,6 +5,7 @@ const Definer = require('../lib/mistake');
 const assert = require('assert');
 const { shapeIntoMongooseObjectId } = require('../lib/config');
 const Like = require('./Like');
+const View = require('./View');
 
 class Member {
     constructor() {
@@ -133,6 +134,31 @@ class Member {
             throw err;
         }
     };
+
+    async viewChosenItemByMember(member, view_ref_id, group_type) {
+		try {
+			view_ref_id = shapeIntoMongooseObjectId(view_ref_id);
+			const mb_id = shapeIntoMongooseObjectId(member._id);
+
+			const view = new View(mb_id);
+			const isValid = await view.validateChosenTarget(view_ref_id, group_type);
+			assert.ok(isValid, Definer.general_error2);
+            // console.log('isValid:::', isValid);
+
+			// logged user has seen target before
+            const doesExist = await view.checkViewExistence(view_ref_id);
+			// console.log('doesExist:::', doesExist);
+
+            if (!doesExist) {
+				const result = await view.insertMemberView(view_ref_id, group_type);
+				assert.ok(result, Definer.general_error1);
+                // console.log('result:::', result);
+			}
+			return true;
+		} catch (err) {
+			throw err;
+		}
+	};
 };
 
 module.exports = Member;

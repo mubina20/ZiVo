@@ -18,7 +18,7 @@ class Comment {
                 comment: data.comment, 
                 post_id: post_id,      
                 mb_id: mb_id,
-                });
+            });
             const commentResult = await new_comment.save();
 
             assert.ok(commentResult, Definer.comment_error1);

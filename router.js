@@ -36,6 +36,11 @@ router.post(
     uploader_posts.array("post_images"),
     postController.createPost
 );
+router.get(
+    "/post/:id", 
+    memberController.retrieveAuthMember,
+    postController.getChosenPost
+);
 
 //** FOLLOWING related routers **//
 router.post(
