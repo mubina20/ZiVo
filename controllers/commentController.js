@@ -19,4 +19,21 @@ commentController.createComment = async (req, res) => {
         console.log(`ERROR: createComment, ${err.message}`);
         res.json({ state: "fail", message: "There was an error commenting!" });
     }
+};
+
+commentController.editChosenComment = async (req, res) => {
+    try{
+        console.log("POST: User editing comment!");
+        // console.log("req.body:::", req.body);
+
+        assert.ok(req.member, Definer.authentication_error5);
+
+        const comment = new Comment();
+        const result = await comment.editChosenCommentData(req.member, req.body);
+
+        res.json({state: 'success', data: result});
+    } catch(err) {
+        console.log(`ERROR: editChosenComment!, ${err.message}`); 
+        res.json({state: 'fail', message: "There was an error editing comment!"});
+    }
 }

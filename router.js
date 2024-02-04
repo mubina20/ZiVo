@@ -59,6 +59,11 @@ router.post(
     "/comment/createComment",
     memberController.retrieveAuthMember,
     commentController.createComment
-)
+);
+router.post(
+    "/comment/editComment",
+    memberController.retrieveAuthMember,
+    commentController.editChosenComment
+);
 
 module.exports = router;
