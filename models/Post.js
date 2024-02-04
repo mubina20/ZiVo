@@ -1,6 +1,5 @@
 const PostModel = require("../schema/post.model");
 
-const bcrypt = require('bcryptjs');
 const Definer = require('../lib/mistake');
 const assert = require('assert');
 const { shapeIntoMongooseObjectId } = require('../lib/config');

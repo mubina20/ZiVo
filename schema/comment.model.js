@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const { 
-    post_type_enums, 
-    post_status_enums 
-} = require('../lib/config');
-
 const CommentSchema = new mongoose.Schema({
     comment: {
         type: String,

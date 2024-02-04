@@ -4,6 +4,7 @@ const router = Router();
 const memberController = require('./controllers/memberController');
 const postController = require('./controllers/postController');
 const followController = require('./controllers/followController');
+const commentController = require('./controllers/commentController');
 
 const uploader_members = require('./utils/upload-multer')("members");
 const uploader_posts = require('./utils/upload-multer')("posts");
@@ -52,5 +53,12 @@ router.get(
     memberController.retrieveAuthMember,
     followController.getMemberFollowers
 );
+
+//** COMMENT related routers **//
+router.post(
+    "/comment/createComment",
+    memberController.retrieveAuthMember,
+    commentController.createComment
+)
 
 module.exports = router;
