@@ -1,14 +1,15 @@
 const Definer = require("../lib/mistake");
 const PostModel = require("../schema/post.model");
-const likeModel = require("../schema/like.model");
-const memberModel = require("../schema/member.model");
-
+const LikeModel = require("../schema/like.model");
+const MemberModel = require("../schema/member.model");
+const CommentModel = require("../schema/comment.model");
 
 class Like {
     constructor(mb_id) {
-        this.likeModel = likeModel;
-        this.memberModel = memberModel;
+        this.likeModel = LikeModel;
+        this.memberModel = MemberModel;
         this.postModel = PostModel;
+        this.commentModel = CommentModel;
         this.mb_id = mb_id;
     }
 
@@ -20,6 +21,11 @@ class Like {
                 case "member":
                     result = await this.memberModel
                         .findOne({ _id: id, mb_status: "ACTIVE" })
+                        .exec();
+                    break;
+                case "comment":
+                    result = await this.commentModel
+                        .findOne({ _id: id })
                         .exec();
                     break;
                 case "post":
@@ -95,6 +101,14 @@ class Like {
 						.findByIdAndUpdate(
 							{ _id: like_ref_id },
 							{ $inc: { mb_likes: modifier } }
+						)
+						.exec();
+					break;
+                case 'comment':
+					await this.commentModel
+						.findByIdAndUpdate(
+							{ _id: like_ref_id },
+							{ $inc: { comment_likes: modifier } }
 						)
 						.exec();
 					break;
