@@ -71,6 +71,22 @@ adminController.getAllMembers = async (req, res) => {
     }
 };
 
+adminController.updateMemberByAdmin = async (req, res) => {
+	try {
+		console.log("POST: Admin restaurantni o'zgartirmoqda");
+        // console.log("req.body::: ", req.body);
+
+		const member = new Member();
+		const result = await member.updateMemberByAdminData(req.body);
+        // console.log("result::: ", result);
+
+		await res.json({ state: 'success', data: result });
+	} catch (err) {
+		console.log(`ERROR: updateMemberByAdmin, ${err.message}`);
+		res.json({ state: 'fail!', message: "There was an error when Admin updating user's information!" });
+	}
+};
+
 adminController.validateAdmin = (req, res, next) => {
 	if (req.session?.member?.mb_type === 'ADMIN') {
 		req.member = req.session.member;

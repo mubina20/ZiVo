@@ -192,6 +192,25 @@ class Member {
 			throw err;
 		}
 	};
+
+    async updateMemberByAdminData(update_data) {
+		try {
+			const id = shapeIntoMongooseObjectId(update_data?.mb_id);
+
+			const result = await this.memberModel
+				.findByIdAndUpdate(
+                    { _id: id }, 
+                    update_data, 
+                    { new: true }
+                )
+				.exec();
+			assert.ok(result, Definer.general_error1);
+			
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	};
 };
 
 module.exports = Member;
