@@ -28,6 +28,12 @@ router.post(
     memberController.retrieveAuthMember,
     memberController.likeMemberChosen
 );
+router.post(
+	'/member/update',
+	memberController.retrieveAuthMember,
+	uploader_members.single('mb_profile_image'),
+	memberController.updateMember,
+);
 
 //** POST related routers **//
 router.post(

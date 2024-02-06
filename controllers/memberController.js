@@ -123,6 +123,27 @@ memberController.getAllMembers = async (req, res) => {
     }
 };
 
+memberController.updateMember = async (req, res) => {
+	try {
+		console.log("POST: User informationni o'zgartirmoqda");
+		// console.log("req.body:::",req.body);
+		// console.log("req.file:::", req.file);
+		
+		assert.ok(req.member, Definer.authentication_error3);
+		const member = new Member();
+		const result = await member.updateMemberData(
+			req.member?._id, 
+			req.body, 
+			req.file
+		);
+		
+		res.json({ state: 'success', data: result });
+	} catch (err) {
+		console.log(`ERORR: updateMember, ${err.message}`);
+		res.json({ state: 'fail', message: "There was an error updating user information" });
+	}
+};
+
 memberController.likeMemberChosen = async (req, res) => {
 	try {
 		console.log('POST: User liked! (likeMemberChosen)');
