@@ -18,7 +18,6 @@ body {
 /* LOGO */
 .logo{
     margin-left: 30px;
-    
     cursor: pointer;
     letter-spacing: -5px;
     margin-bottom: 80px;
@@ -57,55 +56,6 @@ body {
   --red: #ec1848;
   --border-radius: 4px;
   --box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.075);
-  --switch-bgLightModeColor: #87cefa;
-  --switch-sunColor: gold;
-  --switch-moonColor: #f4f4f4;
-  --switch-bgDarkModeColor: #1f1f27;
-}
-
-
-ul {
-  list-style: none;
-}
-
-a,
-button {
-  color: inherit;
-}
-
-a {
-  text-decoration: none;
-}
-
-button {
-  background: none;
-  cursor: pointer;
-}
-
-input {
-  -webkit-appearance: none;
-}
-
-[type="checkbox"] {
-  position: absolute;
-  left: -9999px;
-}
-
-label {
-  cursor: pointer;
-}
-
-button,
-input {
-  border: none;
-}
-
-svg {
-  display: block;
-}
-
-body {
-  font: 16px/1.5 "Lato", sans-serif;
 }
 
 
@@ -154,11 +104,6 @@ body {
   padding: 12px 15px;
 }
 
-.page-header .admin-menu .switcher {
-  display: inline-block;
-  width: auto;
-}
-
 .page-header .admin-menu .menu-heading h3 {
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -174,8 +119,7 @@ body {
   margin-right: 10px;
 }
 
-.page-header .admin-menu a,
-.page-header .admin-menu button {
+.page-header .admin-menu .section{
   display: flex;
   align-items: center;
   font-size: 0.9rem;
@@ -183,10 +127,8 @@ body {
   margin-bottom: 10px;
 }
 
-.page-header .admin-menu a:hover,
-.page-header .admin-menu a:focus,
-.page-header .admin-menu button:hover,
-.page-header .admin-menu button:focus {
+.page-header .admin-menu .section:hover,
+.page-header .admin-menu .section:focus{
   background: var(--page-header-bgColor-hover);
   color: #03e9f4;
   border-radius: 70px;
@@ -194,16 +136,15 @@ body {
   padding-left: 55px;
   width: 99%;
   text-decoration: none;
+  cursor: pointer;
   box-shadow: 0 0 5px #03e9f4,
               0 0 10px #03e9f4,
               0 0 5px #03e9f4,
               0 0 5px #03e9f4;
 }
 
-.page-header .admin-menu a:hover svg,
-.page-header .admin-menu a:focus svg,
-.page-header .admin-menu button:hover svg,
-.page-header .admin-menu button:focus svg {
+.page-header .admin-menu .section:hover svg,
+.page-header .admin-menu .section:focus svg{
   fill: var(--blue);
 }
 
@@ -220,4 +161,18 @@ body {
 
 .count .number {
   font-size: 30px;
+}
+
+.charts,
+.comments,
+.members {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
+.section[selected] {
+  background: red;
 }
