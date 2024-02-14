@@ -1,5 +1,3 @@
-const ConversationModel = require("../schema/conversation.model");
-const MessageModel = require("../schema/message.model");
 const ChatModel = require("../schema/chat.model");
 
 const Definer = require('../lib/mistake');
@@ -8,8 +6,6 @@ const { shapeIntoMongooseObjectId } = require('../lib/config');
 
 class Chat {
     constructor() {
-        this.conversationModel = ConversationModel;
-        this.messageModel = MessageModel;
         this.chatModel = ChatModel;
     }
 
@@ -56,10 +52,10 @@ class Chat {
         }
     };
 
-    async findChatData(member, inpuqry) {
+    async findChatData(member, id) {
         try{
             const sender_id = shapeIntoMongooseObjectId(member._id);
-            const receiver_id = shapeIntoMongooseObjectId(inpuqry.receiver_id);
+            const receiver_id = shapeIntoMongooseObjectId(id.receiver_id);
 
             const chat = await this.chatModel.findOne({
                 members: { $all: [sender_id, receiver_id] }

@@ -6,6 +6,7 @@ const postController = require('./controllers/postController');
 const followController = require('./controllers/followController');
 const commentController = require('./controllers/commentController');
 const chatController = require('./controllers/chatController');
+const messageController = require('./controllers/messageController');
 
 const uploader_members = require('./utils/upload-multer')("members");
 const uploader_posts = require('./utils/upload-multer')("posts");
@@ -90,5 +91,22 @@ router.get(
     memberController.retrieveAuthMember, 
     chatController.findChat
 );
+
+//** Message related routers **//
+router.post(
+    "/chat/message",
+    memberController.retrieveAuthMember,
+    messageController.createMessaage
+);
+router.get(
+    "/chat/:chat_id", 
+    memberController.retrieveAuthMember, 
+    messageController.getMessages
+);
+// router.get(
+//     "/chat/find/:receiver_id", 
+//     memberController.retrieveAuthMember, 
+//     chatController.findChat
+// );
 
 module.exports = router;

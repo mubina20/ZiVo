@@ -6,7 +6,7 @@ let chatController = module.exports;
 
 chatController.createChat = async (req, res) => {
     try{
-        console.log("POST: User commented!");
+        console.log("POST: User creating chat!");
 
         assert.ok(req.member, Definer.authentication_error5);
 
@@ -22,7 +22,7 @@ chatController.createChat = async (req, res) => {
 
 chatController.findUserChats = async (req, res) => {
     try{
-        console.log("GET: User commented!");
+        console.log("GET: User finding chats!");
 
         assert.ok(req.member, Definer.authentication_error5);
 
@@ -38,7 +38,7 @@ chatController.findUserChats = async (req, res) => {
 
 chatController.findChat = async (req, res) => {
     try{
-        console.log("POST: User commented!");
+        console.log("POST: User finding chat!");
 
         assert.ok(req.member, Definer.authentication_error5);
 
