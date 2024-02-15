@@ -23,16 +23,32 @@ messageController.createMessaage = async (req, res) => {
 
 messageController.getMessages = async (req, res) => {
     try{
-        console.log("POST: User Creating Message!");
+        console.log("GET: User Creating Message!");
 
         assert.ok(req.member, Definer.authentication_error5);
 
         const messaege = new Message();
-        const result = await messaege.getMessagesData(req.params);
+        const result = await messaege.getMessagesData(req.params.chat_id);
 
         res.json({ state: "success", data: result });
     } catch(err) {
         console.log(`ERROR: getMessages, ${err.message}`);
         res.json({ state: "fail", message: "There was an error finding the messages!" });
+    }
+};
+
+messageController.reactionMessage = async (req, res) => {
+    try{
+        console.log("POST: User reacting to message!");
+
+        assert.ok(req.member, Definer.authentication_error5);
+
+        const messaege = new Message();
+        const result = await messaege.reactionMessageData(req.body);
+
+        res.json({ state: "success", data: result });
+    } catch(err) {
+        console.log(`ERROR: reactionMessage, ${err.message}`);
+        res.json({ state: "fail", message: "There was an error reacting to message!" });
     }
 };

@@ -103,10 +103,10 @@ router.get(
     memberController.retrieveAuthMember, 
     messageController.getMessages
 );
-// router.get(
-//     "/chat/find/:receiver_id", 
-//     memberController.retrieveAuthMember, 
-//     chatController.findChat
-// );
+router.post(
+    "/chat/message/reaction",
+    memberController.retrieveAuthMember,
+    messageController.reactionMessage
+);
 
 module.exports = router;

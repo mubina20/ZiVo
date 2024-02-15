@@ -33,9 +33,9 @@ class Message {
         }
     };
 
-    async getMessagesData(id) {
+    async getMessagesData(chatId) {
         try{
-            const chat_id = shapeIntoMongooseObjectId(id.chat_id);
+            const chat_id = shapeIntoMongooseObjectId(chatId);
 
             const message = await this.messageModel.find({chat_id});
             
@@ -46,6 +46,47 @@ class Message {
             throw err;
         }
     };
+
+    // async reactionMessageData(data) {
+    //     try{
+    //         const message_id = shapeIntoMongooseObjectId(data.message_id);
+    //         const message_reaction = data.message_reaction;
+
+    //         const result = await this.messageModel
+	// 		.findByIdAndUpdate(
+	// 			{_id: message_id},
+    //             message_reaction,
+	// 			{ new: true }
+	// 		).exec();
+    //         assert.ok(result, Definer.message_error2);
+
+    //         return result;
+    //     } catch(err) {
+    //         throw err;
+    //     }
+    // };
+
+    async reactionMessageData(data) {
+        try {
+            const message_id = shapeIntoMongooseObjectId(data.message_id);
+            const message_reaction = data.message_reaction;
+    
+            const result = await this.messageModel
+                .findByIdAndUpdate(
+                    {_id: message_id }, 
+                    { message_reaction: message_reaction }, 
+                    { new: true } 
+                )
+                .exec();
+    
+            assert.ok(result, Definer.message_error2);
+    
+            return result;
+        } catch(err) {
+            throw err;
+        }
+    }
+    
 };
 
 module.exports = Message;

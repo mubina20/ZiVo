@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { message_reaction_enum_list } = require('../lib/config');
 
 const messageSchema = new mongoose.Schema({
     sender_id: {
@@ -14,6 +15,15 @@ const messageSchema = new mongoose.Schema({
     message: {
         type: String,
         required: true
+    },
+    message_reaction: {
+        type: String,
+        required: false,
+        default: "notReaction",
+        enum: { 
+            values: message_reaction_enum_list,
+            message: "{VALUES} is not among permitted values!"
+        }
     }
 },
     { timestamps: true }
