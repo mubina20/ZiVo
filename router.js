@@ -108,5 +108,10 @@ router.post(
     memberController.retrieveAuthMember,
     messageController.reactionMessage
 );
+router.post(
+    "/chat/message/edit",
+    memberController.retrieveAuthMember,
+    messageController.editMessage
+);
 
 module.exports = router;

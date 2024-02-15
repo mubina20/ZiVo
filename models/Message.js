@@ -79,13 +79,34 @@ class Message {
                 )
                 .exec();
     
-            assert.ok(result, Definer.message_error2);
+            assert.ok(result, Definer.message_error3);
     
             return result;
         } catch(err) {
             throw err;
         }
-    }
+    };
+
+    async editMessageData(data) {
+        try {
+            const message_id = shapeIntoMongooseObjectId(data.message_id);
+            const editMessage = data.editMessage;
+    
+            const result = await this.messageModel
+                .findByIdAndUpdate(
+                    {_id: message_id }, 
+                    { message: editMessage }, 
+                    { new: true } 
+                )
+                .exec();
+    
+            assert.ok(result, Definer.message_error4);
+    
+            return result;
+        } catch(err) {
+            throw err;
+        }
+    };
     
 };
 
