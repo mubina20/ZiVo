@@ -107,7 +107,22 @@ class Message {
             throw err;
         }
     };
+
+    async deleteMessageData(data) {
+        try {
+            const message_id = shapeIntoMongooseObjectId(data.message_id);
     
+            const result = await this.messageModel
+                .findOneAndDelete({ _id: message_id })
+                .exec();
+    
+            assert.ok(result, Definer.message_error5);
+    
+            return result;
+        } catch(err) {
+            throw err;
+        }
+    };
 };
 
 module.exports = Message;

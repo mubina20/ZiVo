@@ -113,5 +113,10 @@ router.post(
     memberController.retrieveAuthMember,
     messageController.editMessage
 );
+router.post(
+    "/chat/message/delete",
+    memberController.retrieveAuthMember,
+    messageController.deleteMessage
+);
 
 module.exports = router;
