@@ -51,6 +51,27 @@ class Post {
 			throw err;
 		}
 	};
+
+    async statusPostData(data) {
+		try {
+			const post_id = shapeIntoMongooseObjectId(data.post_id); 
+            const status = data.post_status
+
+			const result = await this.postModel
+                .findByIdAndUpdate(
+                    {_id: post_id }, 
+                    { post_status: status }, 
+                    { new: true } 
+                )
+                .exec();
+
+			assert.ok(result, Definer.post_error1);
+
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	};
 };
 
 module.exports = Post;

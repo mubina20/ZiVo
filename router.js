@@ -49,6 +49,11 @@ router.get(
     memberController.retrieveAuthMember,
     postController.getChosenPost
 );
+router.post(
+    "/post/status", 
+    memberController.retrieveAuthMember,
+    postController.statusPost
+);
 
 //** FOLLOWING related routers **//
 router.post(
