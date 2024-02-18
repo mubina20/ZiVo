@@ -1,6 +1,5 @@
 const assert = require('assert');
 const Definer = require('../lib/mistake');
-const Chat = require('../models/Chat');
 const Message = require('../models/Message');
 
 let messageController = module.exports;

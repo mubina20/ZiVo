@@ -3,7 +3,7 @@ MemberModel = require('../schema/member.model');
 const bcrypt = require('bcryptjs');
 const Definer = require('../lib/mistake');
 const assert = require('assert');
-const { shapeIntoMongooseObjectId } = require('../lib/config');
+const { shapeIntoMongooseObjectId, lookup_auth_member_liked } = require('../lib/config');
 const Like = require('./Like');
 const View = require('./View');
 
@@ -71,16 +71,16 @@ class Member {
 				{ $unset: 'mb_password' }
             ];
 
-            // if (member) {
-			// 	// Condition if not seen before
-			// 	await this.viewChosenItemByMember(member, id, 'member');
+            if (member) {
+				// Condition if not seen before
+				await this.viewChosenItemByMember(member, id, 'member');
             
-            //     aggregateQuery.push(lookup_auth_member_liked(auth_mb_id));
-			// 	aggregateQuery.push(lookup_auth_member_following(auth_mb_id, 'members'));
-			// }
+                aggregateQuery.push(lookup_auth_member_liked(auth_mb_id));
+				// aggregateQuery.push(lookup_auth_member_following(auth_mb_id, 'members'));
+			}
 
 			const result = await this.memberModel.aggregate(aggregateQuery).exec();
-			assert.ok(result, Definer.general_err2);
+			assert.ok(result, Definer.general_error2);
 
 			return result[0];
         } catch(err) {
@@ -92,11 +92,11 @@ class Member {
 		try {
 			const result = await this.memberModel
                 .find({
-                    mb_type: { $in: ['USER', 'GROUP_OWNER'] }
+                    mb_type: "USER"
                 })
                 .exec();
 
-			assert(result, Definer.general_err1);
+			assert(result, Definer.general_error1);
 			return result;
 		} catch (err) {
 			throw err;

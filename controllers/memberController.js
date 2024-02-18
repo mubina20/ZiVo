@@ -8,17 +8,9 @@ let memberController = module.exports;
 memberController.signupProcess = async (req, res) => {
     try{
         console.log("POST: Signup");
-        // assert.ok(req.file, Definer.general_error1);
-        
-
-        console.log("req.file", req.file);
-        console.log("req.body", req.body);
-
-        const data = req.body;
-        // data.mb_image = req.file.path; 
 
         const member = new Member(); 
-        const new_member = await member.signupData(data); 
+        const new_member = await member.signupData(req.body); 
 
         const token = memberController.createToken(new_member);
 		res.cookie('access_token', token, {
@@ -36,10 +28,9 @@ memberController.signupProcess = async (req, res) => {
 memberController.loginProcess = async (req, res) => {
     try{
         console.log("POST: Login");
-        const data = req.body; 
 
         const member = new Member();
-        const result = await member.loginData(data);
+        const result = await member.loginData(req.body);
 
         const token = memberController.createToken(result);
         // console.log("TOKEN:::", token);
@@ -91,7 +82,6 @@ memberController.getChosenMember = async (req, res) => {
 		const member = new Member();
 		const result = await member.getChosenMemberData(req.member, id);
 
-		// console.log('result:::', result);
 		res.json({ state: 'success', data: result });
 	} catch (err) {
 		console.log(`ERORR, cont/getChosenMember, ${err.message}`);
@@ -126,8 +116,6 @@ memberController.getAllMembers = async (req, res) => {
 memberController.updateMember = async (req, res) => {
 	try {
 		console.log("POST: User informationni o'zgartirmoqda");
-		// console.log("req.body:::",req.body);
-		// console.log("req.file:::", req.file);
 		
 		assert.ok(req.member, Definer.authentication_error3);
 		const member = new Member();
@@ -152,8 +140,6 @@ memberController.likeMemberChosen = async (req, res) => {
 		
 		const like_ref_id = req.body.like_ref_id;
 		const group_type = req.body.group_type;
-		// console.log("LIKE_REF_ID:::", like_ref_id);
-		// console.log("GROUP_TYPE:::", group_type);
 
 		const member = new Member();
 		const result = await member.likeChosenItemByMember(req.member, like_ref_id, group_type);

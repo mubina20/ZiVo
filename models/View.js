@@ -1,12 +1,16 @@
 const MemberModel = require('../schema/member.model');
 const ViewModel = require('../schema/view.model');
-const PostModel = require('../schema/photoPost.model');
+const PhotoModel = require("../schema/photoPost.model");
+const ArticleModel = require("../schema/articlePost.model");
+const VideoModel = require("../schema/videoPost.model");
 
 class View {
 	constructor(mb_id) {
 		this.viewModel = ViewModel;
 		this.memberModel = MemberModel;
-		this.postModel = PostModel;
+		this.photoModel = PhotoModel;
+        this.articleModel = ArticleModel;
+        this.videoModel = VideoModel;
 		this.mb_id = mb_id;
 	}
 
@@ -23,11 +27,30 @@ class View {
 						.exec();
 					break;
 
-				case 'post':
-					result = await this.postModel
+				case 'photo':
+					result = await this.photoModel
 						.findOne({
 							_id: view_ref_id,
 							post_status: 'active',
+							post_type: "story"
+						})
+						.exec();
+					break;
+				case 'article':
+					result = await this.articleModel
+						.findOne({
+							_id: view_ref_id,
+							post_status: 'active',
+							post_type: "story"
+						})
+						.exec();
+					break;
+				case 'video':
+					result = await this.videoModel
+						.findOne({
+							_id: view_ref_id,
+							post_status: 'active',
+							post_type: "story"
 						})
 						.exec();
 					break;
@@ -73,8 +96,32 @@ class View {
 						.exec();
 					break;
 
-				case 'post':
-					await this.postModel
+				case 'photo':
+					await this.photoModel
+						.findByIdAndUpdate(
+							{
+								_id: view_ref_id,
+							},
+							{
+								$inc: { post_views: 1 } 
+							}
+						)
+						.exec();
+					break;
+				case 'article':
+					await this.articleModel
+						.findByIdAndUpdate(
+							{
+								_id: view_ref_id,
+							},
+							{
+								$inc: { post_views: 1 } 
+							}
+						)
+						.exec();
+					break;
+				case 'video':
+					await this.videoModel
 						.findByIdAndUpdate(
 							{
 								_id: view_ref_id,

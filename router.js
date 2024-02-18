@@ -42,7 +42,7 @@ router.post(
 router.post(
     "/post/create/photo",
     memberController.retrieveAuthMember,
-    uploader_photo.array("post_content", 10),
+    uploader_photo.array("post_content", 8),
     postController.createPhotoPost
 );
 router.post(
@@ -57,9 +57,19 @@ router.post(
     postController.createVideoPost
 );
 router.get(
-    "/post/:id", 
+    "/post/photo/:id", 
     memberController.retrieveAuthMember,
-    postController.getChosenPost
+    postController.getChosenPhotosPost
+);
+router.get(
+    "/post/article/:id", 
+    memberController.retrieveAuthMember,
+    postController.getChosenArticlePost
+);
+router.get(
+    "/post/video/:id", 
+    memberController.retrieveAuthMember,
+    postController.getChosenVideoPost
 );
 router.post(
     "/post/status", 

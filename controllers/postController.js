@@ -1,5 +1,3 @@
-const Member = require('../models/Member');
-const jwt = require('jsonwebtoken');
 const assert = require('assert');
 const Definer = require('../lib/mistake');
 const Post = require('../models/Post');
@@ -10,14 +8,10 @@ postController.createPhotoPost = async (req, res) => {
     try {
 		console.log('POST: User posting! (createPost)');        
 
-        console.log("DATA :::", req.body);
-        console.log("req.member", req.member);
-
         assert.ok(req.files, Definer.general_error3);
         const files = req.files.map((ele) => {
             return ele.path.replace(/\\/g, '/');
         });
-        console.log("req.files", files);
 
 		const post = new Post();
         const result = await post.createPhotoPostData(req.body, files);
@@ -34,7 +28,7 @@ postController.createArticlePost = async (req, res) => {
 		console.log('POST: User posting! (createPost)');
 
 		const post = new Post();
-        const result = await post.createArticlePostData(req.body, req.body);
+        const result = await post.createArticlePostData(req.body);
 
 		res.json({ state: 'success', data: result });
 	} catch (err) {
@@ -60,18 +54,48 @@ postController.createVideoPost = async (req, res) => {
 	}
 };
 
-postController.getChosenPost = async (req, res) => {
+postController.getChosenPhotosPost = async (req, res) => {
     try {
-        console.log("GET: one post is choosed!");
+        console.log("GET: one photo post is choosed!");
 
         const id = req.params.id;
         const post = new Post();
-        const result = await post.getChosenPostData(req.member, id);   
+        const result = await post.getChosenPhotosPostData(req.member, id);   
         
         res.json({ state: "success", data: result });        
     } catch (err){
-        console.log(`ERORR: getChosenPost!, ${err.message}`);
-		res.json({state: 'fail', message: "There was an error choosing the Post!"});
+        console.log(`ERORR: getChosenPhotosPost!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error choosing the photo Post!"});
+    }
+};
+
+postController.getChosenArticlePost = async (req, res) => {
+    try {
+        console.log("GET: one article post is choosed!");
+
+        const id = req.params.id;
+        const post = new Post();
+        const result = await post.getChosenArticlePostData(req.member, id);   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: getChosenArticlePost!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error choosing the article Post!"});
+    }
+};
+
+postController.getChosenVideoPost = async (req, res) => {
+    try {
+        console.log("GET: one video post is choosed!");
+
+        const id = req.params.id;
+        const post = new Post();
+        const result = await post.getChosenVideoPostData(req.member, id);   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: getChosenVideoPost!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error choosing the video Post!"});
     }
 };
 

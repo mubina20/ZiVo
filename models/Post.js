@@ -29,20 +29,24 @@ class Post {
 
             assert.ok(result, Definer.post_error2);
 
+            if (post_type === "story") {
+                setTimeout(async () => {
+                    await this.photoModel.findByIdAndDelete(result._id);
+                }, 24 * 60 * 60 * 1000); 
+            }
+
             return result;
         } catch(err) {
             throw err;
         }
     };
 
-    async createArticlePostData(member, data) {
+    async createArticlePostData(data) {
         try{
             // mb_id = shapeIntoMongooseObjectId(member._id);
             const post_title = data.post_title;
             const post_type = data.post_type;
             const post_content = data.post_content;
-
-            console.log("DATA::::", data);
 
             const new_post = new this.articleModel({
                 post_title: post_title,
@@ -53,7 +57,12 @@ class Post {
 
             assert.ok(result, Definer.post_error3);
 
-            // console.log("result::::", result)
+            if (post_type === "story") {
+                setTimeout(async () => {
+                    await this.photoModel.findByIdAndDelete(result._id);
+                }, 24 * 60 * 60 * 1000); 
+            }
+
             return result;
         } catch(err) {
             throw err;
@@ -75,23 +84,80 @@ class Post {
 
             assert.ok(result, Definer.post_error4);
 
+            if (post_type === "story") {
+                setTimeout(async () => {
+                    await this.photoModel.findByIdAndDelete(result._id);
+                }, 24 * 60 * 60 * 1000); 
+            }
+
             return result;
         } catch(err) {
             throw err;
         }
     };
 
-    async getChosenPostData(member, id) {
+    async getChosenPhotosPostData(member, id) {
 		try {
 			const auth_mb_id = shapeIntoMongooseObjectId(member?._id); 
 			id = shapeIntoMongooseObjectId(id); 
 
 			if (member) {
 				const member_obj = new Member();
-				await member_obj.viewChosenItemByMember(member, id, 'post');
+				await member_obj.viewChosenItemByMember(member, id, 'photo');
 			}
 
-			const result = await this.postModel
+			const result = await this.photoModel
+				.aggregate([ 
+                    { $match: { _id: id, post_status: 'active' } },
+                    lookup_auth_member_liked(auth_mb_id)
+                ])
+				.exec();
+
+			assert.ok(result, Definer.general_error1);
+
+			return result[0];
+		} catch (err) {
+			throw err;
+		}  
+
+	};
+
+    async getChosenArticlePostData(member, id) {
+		try {
+			const auth_mb_id = shapeIntoMongooseObjectId(member?._id); 
+			id = shapeIntoMongooseObjectId(id); 
+
+			if (member) {
+				const member_obj = new Member();
+				await member_obj.viewChosenItemByMember(member, id, 'article' );
+			}
+
+			const result = await this.photoModel
+				.aggregate([ 
+                    { $match: { _id: id, post_status: 'active' } },
+                    lookup_auth_member_liked(auth_mb_id)
+                ])
+				.exec();
+
+			assert.ok(result, Definer.general_error1);
+
+			return result[0];
+		} catch (err) {
+			throw err;
+		}
+	};
+
+    async getChosenVideoPostData(member, id) {
+		try {
+			const auth_mb_id = shapeIntoMongooseObjectId(member?._id); 
+			id = shapeIntoMongooseObjectId(id); 
+
+			if (member) {
+				const member_obj = new Member();
+				await member_obj.viewChosenItemByMember(member, id, 'photo');
+			}
+
+			const result = await this.photoModel
 				.aggregate([ 
                     { $match: { _id: id, post_status: 'active' } },
                     lookup_auth_member_liked(auth_mb_id)

@@ -6,12 +6,10 @@ let adminController = module.exports;
 
 adminController.loginProcess = async (req, res) => {
     try{
-        console.log('POST: Login Process'); 
-        
-        const data = req.body; 
+        console.log('POST: Login Process');  
 
         const member = new Member();
-        const result = await member.loginData(data);
+        const result = await member.loginData(req.body);
 
         // SESSION 
         if (result.mb_type === 'ADMIN') {
@@ -74,11 +72,9 @@ adminController.getAllMembers = async (req, res) => {
 adminController.updateMemberByAdmin = async (req, res) => {
 	try {
 		console.log("POST: Admin restaurantni o'zgartirmoqda");
-        // console.log("req.body::: ", req.body);
 
 		const member = new Member();
 		const result = await member.updateMemberByAdminData(req.body);
-        // console.log("result::: ", result);
 
 		await res.json({ state: 'success', data: result });
 	} catch (err) {
