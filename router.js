@@ -9,7 +9,8 @@ const chatController = require('./controllers/chatController');
 const messageController = require('./controllers/messageController');
 
 const uploader_members = require('./utils/upload-multer')("members");
-const uploader_posts = require('./utils/upload-multer')("posts");
+const uploader_photo = require('./utils/upload-multer')("photos");
+const uploader_video = require('./utils/upload-multer')("videos");
 
 router.post('/signup', memberController.signupProcess);
 router.post('/login', memberController.loginProcess);
@@ -39,10 +40,21 @@ router.post(
 
 //** POST related routers **//
 router.post(
-    "/post/create",
+    "/post/create/photo",
     memberController.retrieveAuthMember,
-    uploader_posts.array("post_images"),
-    postController.createPost
+    uploader_photo.array("post_content", 10),
+    postController.createPhotoPost
+);
+router.post(
+    "/post/create/article",
+    memberController.retrieveAuthMember,
+    postController.createArticlePost
+);
+router.post(
+    "/post/create/video",
+    memberController.retrieveAuthMember,
+    uploader_video.single("post_content"),
+    postController.createVideoPost
 );
 router.get(
     "/post/:id", 

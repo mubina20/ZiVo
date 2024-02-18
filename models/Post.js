@@ -1,4 +1,6 @@
-const PostModel = require("../schema/post.model");
+const PhotoModel = require("../schema/photoPost.model");
+const ArticleModel = require("../schema/articlePost.model");
+const VideoModel = require("../schema/videoPost.model");
 
 const Definer = require('../lib/mistake');
 const assert = require('assert');
@@ -7,20 +9,72 @@ const Member = require("./Member");
 
 class Post {
     constructor() {
-        this.postModel = PostModel;
+        this.photoModel = PhotoModel;
+        this.articleModel = ArticleModel;
+        this.videoModel = VideoModel;
     }
 
-    async createPostData(data, member) {
+    async createPhotoPostData(data, photosPath) {
         try{
-            data.mb_id = shapeIntoMongooseObjectId(member._id);
-            // console.log("DATA::::", data);
+            const post_title = data.post_title;
+            const post_type = data.post_type;
+            const post_content = photosPath;
 
-            const new_post = new this.postModel(data);
+            const new_post = new this.photoModel({
+                post_title: post_title,
+                post_type: post_type,
+                post_content: post_content
+            });
             const result = await new_post.save();
 
-            assert.ok(result, Definer.product_err1);
+            assert.ok(result, Definer.post_error2);
+
+            return result;
+        } catch(err) {
+            throw err;
+        }
+    };
+
+    async createArticlePostData(member, data) {
+        try{
+            // mb_id = shapeIntoMongooseObjectId(member._id);
+            const post_title = data.post_title;
+            const post_type = data.post_type;
+            const post_content = data.post_content;
+
+            console.log("DATA::::", data);
+
+            const new_post = new this.articleModel({
+                post_title: post_title,
+                post_type: post_type,
+                post_content: post_content
+            });
+            const result = await new_post.save();
+
+            assert.ok(result, Definer.post_error3);
 
             // console.log("result::::", result)
+            return result;
+        } catch(err) {
+            throw err;
+        }
+    };
+
+    async createVideoPostData(data, videoPath) {
+        try{
+            const post_title = data.post_title;
+            const post_type = data.post_type;
+            const post_content = videoPath;
+
+            const new_post = new this.videoModel({
+                post_title: post_title,
+                post_type: post_type,
+                post_content: post_content
+            });
+            const result = await new_post.save();
+
+            assert.ok(result, Definer.post_error4);
+
             return result;
         } catch(err) {
             throw err;

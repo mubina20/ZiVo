@@ -1,41 +1,34 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const { 
-    post_type_enums, 
-    post_status_enums 
-} = require('../lib/config');
+const { post_status_enums } = require('../lib/config');
 
-const postSchema = new mongoose.Schema({
+const photoSchema = new mongoose.Schema({
     post_title: {
         type: String,
         required: true
     },
-    post_type: {
-        type: String,
-        required: true,
-        enum: {
-            values: post_type_enums, 
-            message: "{VALUES} is not among permitted values!"
-        }
-    },
     post_status: {
         type: String,
         required: true,
-        default: "ACTIVE",
+        default: "active",
         enum: {
             values: post_status_enums,
             message: "{VALUES} is not among permitted values!"
         }
     },
-    post_content: {
+    post_type: {
         type: String,
-        required: false
+        required: true,
+        default: "photo",
+        enum: {
+            values: ['photo', 'story'],
+            message: "{VALUES} is not among permitted values!"
+        }
     },
-    product_images: { 
-        type: Array, 
-        required: false, 
-        default: [] 
+    post_content: {
+        type: Array,
+        required: true
     },
     post_description: {
         type: String,
@@ -63,4 +56,4 @@ const postSchema = new mongoose.Schema({
     }
 }, {timestamps: true});
 
-module.exports = mongoose.model("Post", postSchema);
+module.exports = mongoose.model("Photo", photoSchema);

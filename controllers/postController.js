@@ -6,29 +6,57 @@ const Post = require('../models/Post');
 
 let postController = module.exports;
 
-postController.createPost = async (req, res) => {
+postController.createPhotoPost = async (req, res) => {
     try {
-		console.log('POST: User posting! (createPost)');
+		console.log('POST: User posting! (createPost)');        
 
-        let data = req.body;
-        // data.post_images = req.files.map((ele) => {
-        //     return ele.path.replace(/\\/g, '/');
-        // });
-        console.log("DATA :::", data);
-        console.log("req.member", req.member)
+        console.log("DATA :::", req.body);
+        console.log("req.member", req.member);
+
+        assert.ok(req.files, Definer.general_error3);
+        const files = req.files.map((ele) => {
+            return ele.path.replace(/\\/g, '/');
+        });
+        console.log("req.files", files);
 
 		const post = new Post();
-        const result = await post.createPostData(data, req.member);
+        const result = await post.createPhotoPostData(req.body, files);
 
 		res.json({ state: 'success', data: result });
 	} catch (err) {
-		console.log(`ERORR: createPost, ${err.message}`);
+		console.log(`ERORR: createPhotoPost, ${err.message}`);
+        res.json({ state: "fail", message: "There was an error creating the photos post!" });
+	}
+};
 
-		const error = {
-            state: "Fail",
-            message: err.message
-        }
-        res.render("error", { error: error });
+postController.createArticlePost = async (req, res) => {
+    try {
+		console.log('POST: User posting! (createPost)');
+
+		const post = new Post();
+        const result = await post.createArticlePostData(req.body, req.body);
+
+		res.json({ state: 'success', data: result });
+	} catch (err) {
+		console.log(`ERORR: createArticlePost, ${err.message}`);
+        res.json({ state: "fail", message: "There was an error creating the article post!" });
+	}
+};
+
+postController.createVideoPost = async (req, res) => {
+    try {
+		console.log('POST: User posting Video! (createVideoPost)');
+
+        assert.ok(req.file, Definer.general_error3);
+        const file = req.file.path.replace(/\\/g, '/');
+
+		const post = new Post();
+        const result = await post.createVideoPostData(req.body, file);
+
+		res.json({ state: 'success', data: result });
+	} catch (err) {
+		console.log(`ERORR: createVideoPost, ${err.message}`);
+        res.json({ state: "fail", message: "There was an error creating the video post!" });
 	}
 };
 

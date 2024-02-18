@@ -1,5 +1,5 @@
 const Definer = require("../lib/mistake");
-const PostModel = require("../schema/post.model");
+const PostModel = require("../schema/photoPost.model");
 const LikeModel = require("../schema/like.model");
 const MemberModel = require("../schema/member.model");
 const CommentModel = require("../schema/comment.model");

@@ -1,6 +1,6 @@
 const MemberModel = require('../schema/member.model');
 const ViewModel = require('../schema/view.model');
-const PostModel = require('../schema/post.model');
+const PostModel = require('../schema/photoPost.model');
 
 class View {
 	constructor(mb_id) {
