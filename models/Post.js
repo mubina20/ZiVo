@@ -192,6 +192,50 @@ class Post {
 			throw err;
 		}
 	};
+
+    async getAllPostsData() {
+		try {
+
+            const random = parseInt(Math.random() * 3);
+            console.log("random", random);
+            
+            let result;
+
+            switch(random){
+                case 0:
+                    result = await this.articleModel
+                        .findOne({
+                            post_status: "active"
+                        })
+                        .exec();
+
+                    assert(result, Definer.general_error1);
+                    break;
+                case 1:
+                    result = await this.videoModel
+                        .findOne({
+                            post_status: "active"
+                        })
+                        .exec();
+
+                    assert(result, Definer.general_error1);
+                    break;
+                case 2:
+                    result = await this.photoModel
+                        .findOne({
+                            post_status: "active"
+                        })
+                        .exec();
+
+                    assert(result, Definer.general_error1);
+                    break;
+            }
+
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	};
 };
 
 module.exports = Post;

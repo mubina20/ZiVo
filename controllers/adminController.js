@@ -1,6 +1,7 @@
 const Member = require('../models/Member');
 const assert = require('assert');
 const Definer = require('../lib/mistake');
+const Post = require('../models/Post');
 
 let adminController = module.exports;
 
@@ -83,9 +84,23 @@ adminController.updateMemberByAdmin = async (req, res) => {
 	}
 };
 
+adminController.getMembersByCountry = async (req, res) => {
+	try {
+		console.log("POST: Admin restaurantni o'zgartirmoqda");
+
+		const member = new Member();
+		const result = await member.getMembersByCountryData();
+
+		await res.json({ state: 'success', data: result });
+	} catch (err) {
+		console.log(`ERROR: updateMemberByAdmin, ${err.message}`);
+		res.json({ state: 'fail!', message: "There was an error when Admin updating user's information!" });
+	}
+};
+
 adminController.validateAdmin = (req, res, next) => {
 	if (req.session?.member?.mb_type === 'ADMIN') {
-		req.member = req.session.member;
+	 	    req.member = req.session.member;
 		next();
 	} else {
 		const html = `<script>

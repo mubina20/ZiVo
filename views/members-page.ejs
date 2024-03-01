@@ -4,17 +4,14 @@
 <body>
     <header class="page-header">
         <div class="logo">
-            <a
-             href="/admin">
+            <a href="/admin">
                 <span>Z</span>
                 I
                 <span>V</span>
                 O
-            </a
-            >
+            </a>
         </div>
         <nav>
-            
             <ul class="admin-menu">
                 <li class="menu-heading">
                     <h3>Admin</h3>
@@ -43,7 +40,6 @@
                         </svg>
                         <span class="chart">Charts</span>
                     </div>
-                    
                 </li>
                 
                 <li class="menu-heading"  id="settings-section">
@@ -59,6 +55,16 @@
                         <span>Settings</span>
                     </div>
                 </li>
+
+                <li>
+                    <div class="section logout">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                        </svg>
+                        <span><a href="/admin/logout" class="logout-link">LogOut</a></span>
+                    </div>
+                </li>
                 <div class="count">
                     <div class="number">
                         <span class="members"><%= members_data.length %></span>
@@ -67,31 +73,62 @@
                 </div>
 
                 
-                <!-- <% members_data.map(function(value, key) { %>
-                    <% if(members_data.mb_type === 'USER') { %>
-                        <h1><%= value.mb_nick %>, <h4><%= value.mb_type %></h4> <%= value.mb_iamge %></h1>
-                    <% } else { %>
-                        <h1><%= value.mb_nick %>, <h4><%= value.mb_type %></h4></h1>
-                    <% } %>
-                <% }); %> -->
+                
                 
                 
             </ul>
         </nav>
     </header>
-    <div class="charts">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-        <canvas id="doughnut-chart" width="300" height="250"></canvas>
-    </div>
-
-    <div class="comments">
-        THis is comment section!!!dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-    </div>
-
-    <div class="members">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat nesciunt, deserunt, assumenda sequi, ullam blanditiis facilis perferendis id maxime debitis sint repellat eaque voluptatum! Ut sed rem ducimus impedit eveniet, magni autem dolor perspiciatis delectus aspernatur optio temporibus eaque debitis quis nobis nostrum totam possimus fugit veniam dolores quam esse? Itaque, perferendis ab sapiente distinctio reprehenderit necessitatibus eligendi delectus nihil cumque facilis? Id ex porro, accusantium natus ab voluptate officiis delectus aliquid eum architecto corporis perspiciatis. Necessitatibus minus velit pariatur distinctio dolores harum quaerat consectetur ex sapiente ut commodi magnam atque quia error, illo voluptates ipsum fugiat quo sunt? Quos excepturi dignissimos rem. Minima qui facilis magni rem illum incidunt tempora, non, ab eaque quae animi. Provident voluptatum veritatis modi aliquid. Hic molestiae consequuntur sint fugit amet temporibus, at ab ducimus tenetur maiores quidem corporis consectetur sunt numquam ad. Quod officiis illo eius neque quasi perspiciatis quidem necessitatibus magni eligendi quis dolor laborum dolorem, ex corporis nisi corrupti veritatis autem possimus dignissimos. Earum reiciendis, quam et quod sequi adipisci delectus perspiciatis ipsum, quia labore alias corporis enim nesciunt vel omnis? Cumque at perferendis maiores sapiente blanditiis, consectetur ut, aspernatur nam, officiis rerum alias! Blanditiis nesciunt odit facilis voluptatem sapiente, expedita harum quo tempora molestias consectetur eum nam voluptate tenetur, aliquam placeat temporibus laudantium nulla obcaecati quis eos impedit rem! Ad, laudantium perspiciatis tenetur veritatis laborum, in ipsum quidem saepe nisi voluptas consequuntur corrupti officiis doloremque. Earum sapiente in nulla velit facilis id asperiores vel et quo. Reprehenderit suscipit aliquam dolor omnis atque? Pariatur consequatur quam iste? Incidunt, beatae. Sint repellat illum omnis dolores cumque temporibus ad quam, autem saepe aliquam itaque ea ab sit, quisquam velit fugit. Atque facilis, voluptatum commodi ducimus, nisi laboriosam consequuntur eligendi repudiandae consequatur excepturi similique soluta, impedit enim odit nemo non ab in aliquid culpa modi. Expedita minus, dolore nemo sapiente quibusdam consectetur blanditiis error neque ratione, suscipit hic laboriosam? Fugiat, corrupti labore. Molestias, explicabo optio. Vel, delectus rerum odit unde quam dolor voluptatibus perspiciatis neque voluptatem voluptas nobis repellat nam cum impedit accusantium architecto molestias perferendis dolore ad est veniam, sequi ea animi aperiam. Molestiae doloremque iste ratione dolore eaque magni odit excepturi quia. Illo temporibus libero dignissimos veniam ea incidunt laboriosam placeat ipsam ipsum. Iste, rem. Sed dignissimos repellat, illum harum totam veritatis quod est nobis nam consequuntur, obcaecati aliquam doloribus perferendis, et magnam quibusdam. Deserunt ullam incidunt cum recusandae cumque nam quisquam laudantium labore? Optio, repellat. Nisi commodi nam quibusdam consequatur iste facilis perspiciatis, provident esse optio reiciendis, possimus minima, accusamus laborum temporibus iusto quam numquam placeat asperiores. Sed nulla sint ipsa quod recusandae explicabo illum. Sequi aliquam molestias veritatis esse similique distinctio minus rem culpa non quam, porro nemo sint assumenda maxime dolores magni laudantium alias deleniti, tenetur maiores laboriosam. Modi praesentium illum fugit, aperiam obcaecati rerum architecto a quibusdam dolorum ea facere? Nobis deleniti, assumenda temporibus quidem itaque quod necessitatibus inventore asperiores corporis laudantium sequi facilis reprehenderit cupiditate voluptatem at provident laborum! Dicta ipsum assumenda omnis tempore cumque numquam explicabo aliquam sed quidem qui, repellendus voluptate harum totam quos, quibusdam aspernatur. Porro facilis perspiciatis assumenda itaque voluptates natus asperiores aspernatur vero earum, expedita perferendis distinctio sint minus at tenetur? Omnis doloremque impedit tempore tenetur quisquam voluptas, quia modi ipsum reiciendis laborum velit explicabo, excepturi qui facere nulla aut, veritatis non. Autem deleniti error qui asperiores tenetur exercitationem explicabo velit, modi accusantium aliquid reiciendis obcaecati cum provident fugiat nemo illo at unde consectetur consequuntur adipisci atque enim ab ullam iusto. Cum placeat deleniti saepe impedit quas quibusdam! Eos eveniet provident, culpa ea repellat libero vel doloribus ut aliquam dolores a quas animi ex rem explicabo magnam perspiciatis aut amet perferendis atque assumenda. Mollitia eos voluptates labore ab, recusandae ex. Excepturi vero quidem consequatur similique illo incidunt molestias corporis architecto voluptatem beatae, ea tempore soluta error natus, numquam omnis voluptate repellendus id iste minus, asperiores porro unde nemo. Omnis, optio sed! Voluptates quibusdam ipsam qui. Non doloremque aliquam obcaecati in. Nulla laboriosam quidem tenetur placeat? Iste eligendi repudiandae reprehenderit excepturi id modi, commodi voluptate alias ipsam inventore nihil laudantium provident aut ut explicabo debitis iure deserunt possimus corporis eveniet exercitationem. Dolorum rerum quisquam harum maiores temporibus dignissimos rem placeat est, voluptas maxime quis expedita non repellat magni praesentium voluptatibus, dicta commodi sed reiciendis eveniet. Harum, libero veniam recusandae porro nesciunt minus. Molestiae, rerum. Ipsum omnis velit sit debitis fugiat saepe obcaecati esse repellendus suscipit! Quos quaerat, quasi optio explicabo est unde perferendis quae a aperiam qui ad et vero distinctio dicta tenetur laudantium mollitia incidunt excepturi sed soluta asperiores facilis odit nulla eius. Dicta, aliquid. Ab ducimus nobis totam atque architecto maxime? Consectetur enim porro reiciendis error possimus? Similique repellat totam quam possimus accusantium fugit corrupti ratione animi recusandae architecto. Repellat nesciunt corporis, eaque excepturi tenetur eligendi ducimus facere, quisquam ipsa quod sint libero porro eos. Autem aliquam possimus error reprehenderit, earum nam nulla vitae, nihil veritatis quibusdam impedit, minima ab consectetur tempore accusamus quia illum maiores. Saepe iste accusamus assumenda tenetur magni, distinctio aut in ipsam neque, doloribus porro at harum suscipit dolorem officia sequi commodi. Quod molestiae nobis ut aperiam numquam tempora illo minima sunt! Eius quas iusto velit quod. Placeat tenetur earum doloribus, error minus quam itaque officia accusantium vitae sit aliquid! Earum quas numquam deserunt iste placeat deleniti hic modi expedita tempore aliquid excepturi in ullam sit iure ipsam accusantium suscipit quaerat perspiciatis voluptas blanditiis, error nam quisquam. Consectetur, sint. Voluptate illum eaque ab animi fugit ducimus facilis officia error aperiam beatae. At tenetur aperiam a exercitationem id. Iste non delectus ratione voluptatum architecto aspernatur vel repudiandae odio nemo natus soluta ipsam quis error, saepe vero velit, cum libero vitae, veniam adipisci ut a perferendis optio. Error tenetur saepe aspernatur exercitationem quasi molestias, soluta ratione rem molestiae. Nihil illo facilis voluptatem alias non earum blanditiis dicta magnam ut, reprehenderit quae magni nesciunt recusandae exercitationem. Corporis consequatur repellat saepe nobis tenetur aut, ad expedita odio necessitatibus hic vitae? Maxime beatae ipsam, consectetur vero sed optio debitis est perferendis veritatis.
-    </div>
+    <div class="main_container">
+        <div class="memberS">
+            <div id="members_information">  
+                <span class="text">
+                    ZiVo's members information
+                </span>
+                <table>
+                    <thead>
+                        <th scope="col">T/r</th>
+                        <th scope="col">NickName</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col">Birthday</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Status</th>
+                    </thead>
+                    
+                    <% members_data.map((member, key) => { %>
+                        <tbody style="background: white;">
+                            <td><%= key + 1 %></td>
+                            <td>@<%= member.mb_nick %></td>
+                            <td><%= member.mb_name %></td>
+                            <td><%= member.mb_surname %></td>
+                            <td><%= member.mb_birthday %></td>
+                            <td><%= member.mb_gender %></td>
+                            <td><%= member.mb_country %> </td>
+                            <td>
+                                <select class="spec_select mb_status" id="<%= member._id %>">
+                                    <option value="ACTIVE"  <%= member.mb_status ==='ACTIVE' ? 'selected' : '' %> >ACTIVE</option>
+                                    <option value="PAUSED" <%= member.mb_status ==='PAUSED' ? 'selected' : '' %> >PAUSED</option>
+                                    <option value="BLOCKED"  <%= member.mb_status ==='BLOCKED' ? 'selected' : '' %> >BLOCKED</option>
+                                    <option value="DELETED"  <%= member.mb_status ==='DELETED' ? 'selected' : '' %> >DELETED</option>
+                                </select>
+                            </td>
+                        </tbody>
+                    <% }); %>
+                </table>
+            </div>
+        </div>
     
+        <div class="comments">
+            THis is comment section!!!dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+        </div>
+    
+        <div class="charts">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+            <canvas id="doughnut-chart" width="300" height="250"></canvas>
+        </div>
+    </div>    
 </body>
 
 <script src="/js/membersPage.js"></script>

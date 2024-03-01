@@ -76,6 +76,11 @@ router.post(
     memberController.retrieveAuthMember,
     postController.statusPost
 );
+router.post(
+    "/all-posts",
+    memberController.retrieveAuthMember,
+    postController.getAllPosts
+)
 
 //** FOLLOWING related routers **//
 router.post(

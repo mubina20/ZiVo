@@ -22,7 +22,7 @@ $(function(){
     countUp($numberElem, 0, $members.text(), 200);  
 });
 
-
+// CHART
 new Chart(document.getElementById("doughnut-chart"), {
     type: 'doughnut',
     data: {
@@ -48,7 +48,7 @@ document.getElementById('charts-section').addEventListener('click', function(eve
 
   const charts = document.querySelector('.charts');
   const comments = document.querySelector('.comments');
-  const members = document.querySelector('.members');
+  const members = document.querySelector('.memberS');
   
   charts.classList.add('active');
   comments.classList.remove('active');
@@ -59,7 +59,7 @@ document.getElementById('comments-section').addEventListener('click', function(e
 
   const charts = document.querySelector('.charts');
   const comments = document.querySelector('.comments');
-  const members = document.querySelector('.members');
+  const members = document.querySelector('.memberS');
   
   charts.classList.remove('active');
   comments.classList.add('active');
@@ -70,7 +70,7 @@ document.getElementById('members-section').addEventListener('click', function(ev
 
   const charts = document.querySelector('.charts');
   const comments = document.querySelector('.comments');
-  const members = document.querySelector('.members');
+  const members = document.querySelector('.memberS');
   
   charts.classList.remove('active');
   comments.classList.remove('active');
@@ -92,5 +92,23 @@ function selectSection(section) {
   const selectedSection = document.querySelector('.' + section);
   selectedSection.classList.add('select_active');
 }
+
+// Member status change
+$(".mb_status").on('change', function(e) {
+  const id = e.target.id;
+  const mb_status = $(`#${id}.mb_status`).val();
+  console.log("mb_status:", mb_status);
+  
+  axios
+      .post('/admin/members/edit', {mb_id: id, mb_status: mb_status})
+      .then(response => {
+          const result = response.data;
+          console.log(response.data);
+          if(result.state === 'success') alert("mb_status changed successfully");
+          else alert(result.message);
+      })
+      .catch(err => console.log(err));
+});
+
 
 

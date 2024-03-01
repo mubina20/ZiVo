@@ -211,6 +211,23 @@ class Member {
 			throw err;
 		}
 	};
+
+    async getMembersByCountryData() {
+		try {
+			// Barcha postlarni olish
+            const posts = await this.memberModel.find({});
+
+            // Barcha postlardan mb_country larni olishish
+            const countries = posts.map(post => post.mb_country);
+    
+            // Duplikat mb_country larni olib tashlash
+            const uniqueCountries = [...new Set(countries)];
+    
+            return uniqueCountries;
+		} catch (err) {
+			throw err;
+		}
+	};
 };
 
 module.exports = Member;

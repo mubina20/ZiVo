@@ -113,6 +113,20 @@ postController.statusPost = async (req, res) => {
     }
 };
 
+postController.getAllPosts = async (req, res) => {
+    try {
+        console.log("POST: one post is changed status!");
+
+        const post = new Post();
+        const result = await post.getAllPostsData();   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: statusPost!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error saved the Post!"});
+    }
+};
+
 postController.validateAuthUser = (req, res, next) => {
     if(req.session?.member?.mb_type === "USER") {
         req.member = req.session.member;

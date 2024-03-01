@@ -18,5 +18,10 @@ router_bssr.post(
     adminController.validateAdmin,
     adminController.updateMemberByAdmin 
 );
+router_bssr.post( 
+    "/members/country",
+    adminController.validateAdmin,
+    adminController.getMembersByCountry 
+);
 
 module.exports = router_bssr;
