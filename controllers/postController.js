@@ -115,17 +115,60 @@ postController.statusPost = async (req, res) => {
 
 postController.getAllPosts = async (req, res) => {
     try {
-        console.log("POST: one post is changed status!");
+        console.log("POST: All posts are being received!");
 
         const post = new Post();
         const result = await post.getAllPostsData();   
         
         res.json({ state: "success", data: result });        
     } catch (err){
-        console.log(`ERORR: statusPost!, ${err.message}`);
-		res.json({state: 'fail', message: "There was an error saved the Post!"});
+        console.log(`ERORR: getAllPosts!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error finding all posts!"});
     }
 };
+
+postController.getAllVideoPosts = async (req, res) => {
+    try {
+        console.log("POST: all video posts are being received!");
+
+        const post = new Post();
+        const result = await post.getAllVideoPostsData();   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: getAllVideoPosts!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error finding all video posts!"});
+    }
+};
+
+postController.getAllArticlePosts = async (req, res) => {
+    try {
+        console.log("POST: all article posts are being received!");
+
+        const post = new Post();
+        const result = await post.getAllArticlePostsData();   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: getAllArticlePosts!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error finding all article posts!"});
+    }
+};
+
+postController.getAllPhotoPosts = async (req, res) => {
+    try {
+        console.log("POST: all photo posts are being received!");
+
+        const post = new Post();
+        const result = await post.getAllPhotoPostsData();   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: getAllPhotoPosts!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error finding all photo posts!"});
+    }
+};
+
 
 postController.validateAuthUser = (req, res, next) => {
     if(req.session?.member?.mb_type === "USER") {

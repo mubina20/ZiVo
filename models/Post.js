@@ -209,7 +209,7 @@ class Post {
                         })
                         .exec();
 
-                    assert(result, Definer.general_error1);
+                    assert(result, Definer.post_error5);
                     break;
                 case 1:
                     result = await this.videoModel
@@ -231,6 +231,54 @@ class Post {
                     break;
             }
 
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	};
+
+    async getAllVideoPostsData() {
+		try {
+			const result = await this.videoModel
+                .find({
+                    post_status: "active",
+                    post_type: "video"
+                })
+                .exec();
+
+			assert(result, Definer.post_error6);
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	};
+
+    async getAllArticlePostsData() {
+		try {
+			const result = await this.articleModel
+                .find({
+                    post_status: "active",
+                    post_type: "article"
+                })
+                .exec();
+
+			assert(result, Definer.post_error7);
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	};
+
+    async getAllPhotoPostsData() {
+		try {
+			const result = await this.photoModel
+                .find({
+                    post_status: "active",
+                    post_type: "photo"
+                })
+                .exec();
+
+			assert(result, Definer.post_error8);
 			return result;
 		} catch (err) {
 			throw err;

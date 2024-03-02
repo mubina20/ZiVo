@@ -24,6 +24,7 @@ router.get(
 );
 router.get(
     '/members', 
+    memberController.retrieveAuthMember,
     memberController.getAllMembers
 );
 router.post(
@@ -77,10 +78,25 @@ router.post(
     postController.statusPost
 );
 router.post(
-    "/all-posts",
+    "/post/all-posts",
     memberController.retrieveAuthMember,
     postController.getAllPosts
-)
+);
+router.post(
+    "/post/all-videoPosts",
+    memberController.retrieveAuthMember,
+    postController.getAllVideoPosts
+);
+router.post(
+    "/post/all-articlePosts",
+    memberController.retrieveAuthMember,
+    postController.getAllArticlePosts
+);
+router.post(
+    "/post/all-photoPosts",
+    memberController.retrieveAuthMember,
+    postController.getAllPhotoPosts
+);
 
 //** FOLLOWING related routers **//
 router.post(
