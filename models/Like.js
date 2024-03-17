@@ -3,6 +3,7 @@ const PostModel = require("../schema/photoPost.model");
 const LikeModel = require("../schema/like.model");
 const MemberModel = require("../schema/member.model");
 const CommentModel = require("../schema/comment.model");
+const { shapeIntoMongooseObjectId } = require("../lib/config");
 
 class Like {
     constructor(mb_id) {
@@ -132,6 +133,48 @@ class Like {
 			throw err;
 		}
 	};
+
+    // async findMyLikedPostsData(member) {
+	// 	try {
+	// 		// const mb_id = shapeIntoMongooseObjectId(member._id);
+
+    //         const result = await this.likeModel
+    //             // .find({
+    //             //     mb_id: mb_id,
+    //             //     like_group: ["photo", "video", "article"]
+    //             // })
+    //             .findById({ 
+    //                 mb_id: mb_id, 
+    //                 // like_group: { $in: ["photo", "video", "article"] } 
+    //             })
+    //             .exec();
+
+	// 		assert(result, Definer.post_error7);
+
+	// 		return result;
+	// 	} catch (err) {
+	// 		throw new Error(Definer.mongo_validation_err1);
+	// 	}
+	// };
+
+    async findMyLikedPostsData(member) {
+        try {
+            const mb_id = member._id; // member obyektining ID xossasidagi qiymat
+            const result = await this.likeModel
+                .find({ 
+                    mb_id: mb_id, 
+                    // like_group: { $in: ["photo", "video", "article"] } 
+                })
+                .exec();
+    
+            assert(result, Definer.post_error7);
+    
+            return result;
+        } catch (err) {
+            throw new Error(Definer.mongo_validation_err1);
+        }
+    };
+    
 };
 
 module.exports = Like;

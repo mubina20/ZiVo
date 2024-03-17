@@ -1,4 +1,5 @@
-MemberModel = require('../schema/member.model');
+const MemberModel = require('../schema/member.model');
+const LikeModel = require("../schema/like.model");
 
 const bcrypt = require('bcryptjs');
 const Definer = require('../lib/mistake');
@@ -10,6 +11,7 @@ const View = require('./View');
 class Member {
     constructor() {
         this.memberModel = MemberModel;
+        this.likeModel = LikeModel;
     }
 
     async signupData(sighupData) {  
@@ -217,15 +219,36 @@ class Member {
 			// Barcha postlarni olish
             const posts = await this.memberModel.find({});
 
-            // Barcha postlardan mb_country larni olishish
             const countries = posts.map(post => post.mb_country);
     
-            // Duplikat mb_country larni olib tashlash
             const uniqueCountries = [...new Set(countries)];
     
             return uniqueCountries;
 		} catch (err) {
 			throw err;
+		}
+	};
+
+    async findMyLikedPostsData(member) {
+		try {
+			// const mb_id = shapeIntoMongooseObjectId(member._id);
+
+            const result = await this.likeModel
+                // .find({
+                //     mb_id: mb_id,
+                //     like_group: ["photo", "video", "article"]
+                // })
+                .findById({ 
+                    mb_id: mb_id, 
+                    like_group: { $in: ["photo", "video", "article"] } 
+                })
+                .exec();
+
+			assert(result, Definer.post_error7);
+
+			return result;
+		} catch (err) {
+			throw new Error(Definer.mongo_validation_err1);
 		}
 	};
 };

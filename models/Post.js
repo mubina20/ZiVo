@@ -44,12 +44,16 @@ class Post {
     async createArticlePostData(data) {
         try{
             // mb_id = shapeIntoMongooseObjectId(member._id);
-            const post_title = data.post_title;
+            const post_bg_color = data.post_bg_color;
+            const post_text_color = data.post_text_color;
+            const post_align = data.post_align;
             const post_type = data.post_type;
             const post_content = data.post_content;
 
             const new_post = new this.articleModel({
-                post_title: post_title,
+                post_bg_color: post_bg_color,
+                post_text_color: post_text_color,
+                post_align: post_align,
                 post_type: post_type,
                 post_content: post_content
             });

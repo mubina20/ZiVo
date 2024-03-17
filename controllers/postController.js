@@ -6,26 +6,29 @@ let postController = module.exports;
 
 postController.createPhotoPost = async (req, res) => {
     try {
-		console.log('POST: User posting! (createPost)');        
+        console.log('POST: User posting! (createPost)');        
 
-        assert.ok(req.files, Definer.general_error3);
-        const files = req.files.map((ele) => {
-            return ele.path.replace(/\\/g, '/');
-        });
+        assert.ok(req.file, Definer.general_error3);
+        const file = req.file.path.replace(/\\/g, '/');
+        // const file = req.file.path; // Fayl nomini olamiz
+        console.log("req.body", req.body)
+        console.log("file::", file);
 
-		const post = new Post();
-        const result = await post.createPhotoPostData(req.body, files);
+        const post = new Post();
+        const result = await post.createPhotoPostData(req.body, file);
 
-		res.json({ state: 'success', data: result });
-	} catch (err) {
-		console.log(`ERORR: createPhotoPost, ${err.message}`);
+        res.json({ state: 'success', data: result });
+    } catch (err) {
+        console.log(`ERROR: createPhotoPost, ${err.message}`);
         res.json({ state: "fail", message: "There was an error creating the photos post!" });
-	}
+    }
 };
+
 
 postController.createArticlePost = async (req, res) => {
     try {
 		console.log('POST: User posting! (createPost)');
+        console.log("req.body::", req.body);
 
 		const post = new Post();
         const result = await post.createArticlePostData(req.body);

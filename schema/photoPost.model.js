@@ -27,7 +27,7 @@ const photoSchema = new mongoose.Schema({
         }
     },
     post_content: {
-        type: Array,
+        type: String,
         required: true
     },
     post_description: {
@@ -44,7 +44,7 @@ const photoSchema = new mongoose.Schema({
         required: false, 
         default: 0
     },
-    comment: { 
+    post_comment: { 
         type: Schema.Types.ObjectId,
         ref: "Comment",
         required: false

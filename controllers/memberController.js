@@ -2,6 +2,7 @@ const Member = require('../models/Member');
 const jwt = require('jsonwebtoken');
 const assert = require('assert');
 const Definer = require('../lib/mistake');
+const Like = require('../models/Like');
 
 let memberController = module.exports;
 
@@ -150,6 +151,25 @@ memberController.likeMemberChosen = async (req, res) => {
 		res.json({state: 'fail!', message: "There was an error while trying to like"});
 	}
 };
+
+memberController.findMyLikedPosts = async (req, res) => {
+	try {
+		console.log("GET: Member is viewing self liked posts");
+
+		assert.ok(req.member, Definer.authentication_error5);
+		console.log(req.member);
+		const mb_id = req.member;
+
+		const like = new Like(mb_id);
+		
+		const result = await like.findMyLikedPostsData(req.member);
+
+		res.json({ state: 'success', data: result });
+	} catch(err) {
+		console.log(`ERORR: findMyLikedPosts!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error finding all me liked posts!"});
+	}
+}
 
 memberController.retrieveAuthMember = async (req, res, next) => {
 	try {

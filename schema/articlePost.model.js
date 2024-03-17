@@ -4,9 +4,18 @@ const Schema = mongoose.Schema;
 const { post_status_enums } = require('../lib/config');
 
 const articleSchema = new mongoose.Schema({
-    post_title: {
+    post_bg_color: {
         type: String,
-        required: true
+        required: false
+    },
+    post_text_color: {
+        type: String,
+        required: false
+    },
+    post_align: {
+        type: String,
+        default: "start",
+        required: false
     },
     post_status: {
         type: String,

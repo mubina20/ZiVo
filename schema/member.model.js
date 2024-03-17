@@ -86,10 +86,6 @@ const memberSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    mb_background_image: {
-        type: String,
-        required: false
-    },
     mb_views: {
         type: Number,
         required: false, 
