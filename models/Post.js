@@ -14,8 +14,9 @@ class Post {
         this.videoModel = VideoModel;
     }
 
-    async createPhotoPostData(data, photosPath) {
+    async createPhotoPostData(data, photosPath, member) {
         try{
+            const mb_id = shapeIntoMongooseObjectId(member._id);
             const post_title = data.post_title;
             const post_type = data.post_type;
             const post_content = photosPath;
@@ -23,7 +24,9 @@ class Post {
             const new_post = new this.photoModel({
                 post_title: post_title,
                 post_type: post_type,
-                post_content: post_content
+                post_content: post_content,
+                member: mb_id
+
             });
             const result = await new_post.save();
 
@@ -41,9 +44,9 @@ class Post {
         }
     };
 
-    async createArticlePostData(data) {
+    async createArticlePostData(data, member) {
         try{
-            // mb_id = shapeIntoMongooseObjectId(member._id);
+            const mb_id = shapeIntoMongooseObjectId(member._id);
             const post_bg_color = data.post_bg_color;
             const post_text_color = data.post_text_color;
             const post_align = data.post_align;
@@ -55,7 +58,8 @@ class Post {
                 post_text_color: post_text_color,
                 post_align: post_align,
                 post_type: post_type,
-                post_content: post_content
+                post_content: post_content,
+                member: mb_id
             });
             const result = await new_post.save();
 
@@ -73,8 +77,9 @@ class Post {
         }
     };
 
-    async createVideoPostData(data, videoPath) {
+    async createVideoPostData(data, videoPath, member) {
         try{
+            const mb_id = shapeIntoMongooseObjectId(member._id);
             const post_title = data.post_title;
             const post_type = data.post_type;
             const post_content = videoPath;
@@ -82,7 +87,8 @@ class Post {
             const new_post = new this.videoModel({
                 post_title: post_title,
                 post_type: post_type,
-                post_content: post_content
+                post_content: post_content,
+                member: mb_id
             });
             const result = await new_post.save();
 
@@ -207,35 +213,19 @@ class Post {
 
             switch(random){
                 case 0:
-                    result = await this.articleModel
-                        .findOne({
-                            post_status: "active"
-                        })
-                        .exec();
-
-                    assert(result, Definer.post_error5);
+                    result = await this.articleModel.find({ post_status: "active" }).populate('member');
                     break;
                 case 1:
-                    result = await this.videoModel
-                        .findOne({
-                            post_status: "active"
-                        })
-                        .exec();
-
-                    assert(result, Definer.general_error1);
+                    result = await this.videoModel.find({ post_status: 'active' }).populate('member');
                     break;
                 case 2:
-                    result = await this.photoModel
-                        .findOne({
-                            post_status: "active"
-                        })
-                        .exec();
-
-                    assert(result, Definer.general_error1);
+                    result = await this.photoModel.find({ post_status: 'active' }).populate('member');
                     break;
             }
 
-			return result;
+            assert(result, Definer.post_error9);        
+
+            return result.length > 0 ? result[0] : null;
 		} catch (err) {
 			throw err;
 		}

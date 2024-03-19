@@ -49,7 +49,7 @@ const videoSchema = new mongoose.Schema({
         ref: "Comment",
         required: false
     },
-    mb_id: { 
+    member: { 
         type: Schema.Types.ObjectId,
         ref: "Member",
         required: false

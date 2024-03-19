@@ -13,9 +13,10 @@ postController.createPhotoPost = async (req, res) => {
         // const file = req.file.path; // Fayl nomini olamiz
         console.log("req.body", req.body)
         console.log("file::", file);
+        console.log("req.member", req.member)
 
         const post = new Post();
-        const result = await post.createPhotoPostData(req.body, file);
+        const result = await post.createPhotoPostData(req.body, file, req.member);
 
         res.json({ state: 'success', data: result });
     } catch (err) {
@@ -29,9 +30,10 @@ postController.createArticlePost = async (req, res) => {
     try {
 		console.log('POST: User posting! (createPost)');
         console.log("req.body::", req.body);
+        console.log(req.member)
 
 		const post = new Post();
-        const result = await post.createArticlePostData(req.body);
+        const result = await post.createArticlePostData(req.body, req.member);
 
 		res.json({ state: 'success', data: result });
 	} catch (err) {
@@ -48,7 +50,7 @@ postController.createVideoPost = async (req, res) => {
         const file = req.file.path.replace(/\\/g, '/');
 
 		const post = new Post();
-        const result = await post.createVideoPostData(req.body, file);
+        const result = await post.createVideoPostData(req.body, file, req.member);
 
 		res.json({ state: 'success', data: result });
 	} catch (err) {
