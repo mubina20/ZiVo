@@ -9,6 +9,7 @@ let memberController = module.exports;
 memberController.signupProcess = async (req, res) => {
     try{
         console.log("POST: Signup");
+		console.log("SignUp req.body", req.body)
 
         const member = new Member(); 
         const new_member = await member.signupData(req.body); 
@@ -78,6 +79,7 @@ memberController.createToken = (user) => {
 memberController.getChosenMember = async (req, res) => {
 	try {
 		console.log('GET: One Member chosen!');
+		console.log("req.params.id", req.params.id);
 
 		const id = req.params.id;
 		const member = new Member();
@@ -138,6 +140,7 @@ memberController.likeMemberChosen = async (req, res) => {
 		console.log('POST: User liked! (likeMemberChosen)');
 
 		assert.ok(req.member, Definer.authentication_error5);
+		console.log("req.body", req.body)
 		
 		const like_ref_id = req.body.like_ref_id;
 		const group_type = req.body.group_type;
@@ -175,6 +178,7 @@ memberController.retrieveAuthMember = async (req, res, next) => {
 	try {
 		const token = req.cookies['access_token'];
 		req.member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
+		// console.log("Tokeni bor member", req.member);
 		next();
 	} catch (err) {
 		console.log(`ERORR: retrieveAuthMember, ${err.message}`);

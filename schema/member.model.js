@@ -15,12 +15,11 @@ const memberSchema = new mongoose.Schema({
         required: true
     },
     mb_birthday: {
-        type: Number,
+        type: Date,
         required: true
     },
     mb_gender: {
         type: String,
-        required: false,
         required: false,
         default: "UNKNOWN", 
         enum: {
@@ -72,18 +71,37 @@ const memberSchema = new mongoose.Schema({
     },
     mb_address: {
         type: String,
+        default: "Information not entered",
         required: false
     },
     mb_description: {
         type: String,
+        default: "Information not entered",
+        required: false
+    },
+    mb_school: {
+        type: String,
+        default: "Information not entered",
         required: false
     },
     mb_country: {
         type: String,
+        default: "Information not entered",
+        required: false
+    },
+    mb_company: {
+        type: String,
+        default: "Information not entered",
+        required: false
+    },
+    mb_hobby: {
+        type: String,
+        default: "Information not entered",
         required: false
     },
     mb_profile_image: {
         type: String,
+        default: "",
         required: false
     },
     mb_views: {

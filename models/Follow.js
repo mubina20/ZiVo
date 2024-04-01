@@ -110,16 +110,12 @@ class Follow {
     // Member's Followings
     async getMemberFollowingsData(inquery) {
         try {
-            const subscriber_id = shapeIntoMongooseObjectId(inquery.mb_id),
-                page = inquery.page * 1,
-                limit = inquery.limit * 1;
+            const subscriber_id = shapeIntoMongooseObjectId(inquery.mb_id);
     
             const result = await this.followModel
             .aggregate([
                 { $match: { subscriber_id: subscriber_id } },
                 { $sort: { createdAt: -1 } },
-                { $skip: (page - 1) * limit },
-                { $limit: limit },
                 {
                     $lookup: {
                     from: "members",
@@ -144,15 +140,11 @@ class Follow {
     // Member's Followers
     async getMemberFollowersData(member, inquery) {
         try {
-            const follow_id = shapeIntoMongooseObjectId(inquery.mb_id),
-                page = inquery.page * 1,
-                limit = inquery.limit * 1;
+            const follow_id = shapeIntoMongooseObjectId(inquery.mb_id);
     
             let aggregateQuery = [
                 { $match: { follow_id: follow_id } },
                 { $sort: { createdAt: -1 } },
-                { $skip: (page - 1) * limit },
-                { $limit: limit },
                 {
                     $lookup: {
                         from: "members",

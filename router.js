@@ -63,6 +63,11 @@ router.post(
     postController.createVideoPost
 );
 router.get(
+    "/post/:type/:id",
+    memberController.retrieveAuthMember,
+    postController.getChosenPost
+)
+router.get(
     "/post/photo/:id", 
     memberController.retrieveAuthMember,
     postController.getChosenPhotosPost
@@ -82,7 +87,7 @@ router.post(
     memberController.retrieveAuthMember,
     postController.statusPost
 );
-router.post(
+router.get(
     "/post/all-posts",
     memberController.retrieveAuthMember,
     postController.getAllPosts

@@ -1,5 +1,7 @@
 const Definer = require("../lib/mistake");
-const PostModel = require("../schema/photoPost.model");
+const PhotoModel = require("../schema/photoPost.model");
+const ArticleModel = require("../schema/articlePost.model");
+const VideoModel = require("../schema/videoPost.model");
 const LikeModel = require("../schema/like.model");
 const MemberModel = require("../schema/member.model");
 const CommentModel = require("../schema/comment.model");
@@ -9,8 +11,10 @@ class Like {
     constructor(mb_id) {
         this.likeModel = LikeModel;
         this.memberModel = MemberModel;
-        this.postModel = PostModel;
         this.commentModel = CommentModel;
+        this.photoModel = PhotoModel;
+        this.articleModel = ArticleModel;
+        this.videoModel = VideoModel;
         this.mb_id = mb_id;
     }
 
@@ -29,9 +33,18 @@ class Like {
                         .findOne({ _id: id })
                         .exec();
                     break;
-                case "post":
-                default:
-                    result = await this.postModel
+                case "article":
+                    result = await this.articleModel
+                        .findOne({ _id: id, post_status: "active" })
+                        .exec();
+                    break;
+                case "video":
+                    result = await this.videoModel
+                        .findOne({ _id: id, post_status: "active" })
+                        .exec();
+                    break;
+                case "photo":
+                    result = await this.photoModel
                         .findOne({ _id: id, post_status: "active" })
                         .exec();
                     break;
@@ -113,9 +126,32 @@ class Like {
 						)
 						.exec();
 					break;
-                case 'post':
-                default:
-                    await this.postModel
+                case 'article':
+                    await this.articleModel
+                        .findByIdAndUpdate(
+                            {
+                                _id: like_ref_id,
+                            },
+                            {
+                                $inc: { post_likes: modifier },
+                            },
+                        )
+                        .exec();
+                    break;
+                case 'video':
+                    await this.videoModel
+                        .findByIdAndUpdate(
+                            {
+                                _id: like_ref_id,
+                            },
+                            {
+                                $inc: { post_likes: modifier },
+                            },
+                        )
+                        .exec();
+                    break;
+                case 'photo':
+                    await this.photoModel
                         .findByIdAndUpdate(
                             {
                                 _id: like_ref_id,
@@ -136,7 +172,7 @@ class Like {
     
     async findMyLikedPostsData(member) {
         try {
-            const mb_id = member._id; // member obyektining ID xossasidagi qiymat
+            const mb_id = member._id; 
             const result = await this.likeModel
                 .find({ 
                     mb_id: mb_id, 

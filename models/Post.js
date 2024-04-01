@@ -182,6 +182,47 @@ class Post {
 		}
 	};
 
+    async getChosenPostData(member, postType, id) {
+		try {
+			const auth_mb_id = shapeIntoMongooseObjectId(member?._id); 
+			id = shapeIntoMongooseObjectId(id); 
+
+            let result;
+
+            if(postType === "photo"){
+                result = await this.photoModel
+				.aggregate([ 
+                    { $match: { _id: id, post_status: 'active' } },
+                    lookup_auth_member_liked(auth_mb_id)
+                ])
+				.exec();
+            } else if(postType === "article") {
+                result = await this.articleModel
+				.aggregate([ 
+                    { $match: { _id: id, post_status: 'active' } },
+                    lookup_auth_member_liked(auth_mb_id)
+                ])
+				.exec();
+            } else if(postType === "video") {
+                result = await this.videoModel
+				.aggregate([ 
+                    { $match: { _id: id, post_status: 'active' } },
+                    lookup_auth_member_liked(auth_mb_id)
+                ])
+				.exec();
+            } else{
+                return undefined;
+            }
+
+            // console.log("result ::", result);
+			assert.ok(result, Definer.general_error1);
+
+			return result[0];
+		} catch (err) {
+			throw err;
+		}
+	};
+
     async statusPostData(data) {
 		try {
 			const post_id = shapeIntoMongooseObjectId(data.post_id); 
@@ -204,32 +245,40 @@ class Post {
 	};
 
     async getAllPostsData() {
-		try {
-
+        try {
             const random = parseInt(Math.random() * 3);
-            console.log("random", random);
+            // console.log("random", random);
+
+            const countArticlePost = await this.articleModel.countDocuments({ post_status: "active" });
+            // console.log("count", countArticlePost);
+
+            const countVideoPost = await this.videoModel.countDocuments({ post_status: "active" });
+            // console.log("count", countVideoPost);
+
+            const countPhotoPost = await this.photoModel.countDocuments({ post_status: "active" });
+            // console.log("count", countPhotoPost);
+
+            const postsLength = countArticlePost + countVideoPost + countPhotoPost;
+            // console.log("postsLength", postsLength)
             
-            let result;
+            let result = [];
 
-            switch(random){
-                case 0:
-                    result = await this.articleModel.find({ post_status: "active" }).populate('member');
-                    break;
-                case 1:
-                    result = await this.videoModel.find({ post_status: 'active' }).populate('member');
-                    break;
-                case 2:
-                    result = await this.photoModel.find({ post_status: 'active' }).populate('member');
-                    break;
-            }
+            const articlePosts = await this.articleModel.find({ post_status: "active" }).populate('member');
+            const videoPosts = await this.videoModel.find({ post_status: 'active' }).populate('member');
+            const photoPosts = await this.photoModel.find({ post_status: 'active' }).populate('member');
 
-            assert(result, Definer.post_error9);        
+            result.push(...articlePosts, ...videoPosts, ...photoPosts);
+            result.sort(() => Math.random() - 0.5);
 
-            return result.length > 0 ? result[0] : null;
-		} catch (err) {
-			throw err;
-		}
-	};
+            assert(result.length > 0, Definer.post_error9);
+            // console.log("result", result);
+    
+            return result;
+        } catch (err) {
+            throw err;
+        }
+    }; 
+    
 
     async getAllVideoPostsData() {
 		try {

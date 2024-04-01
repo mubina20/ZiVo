@@ -6,14 +6,15 @@ let postController = module.exports;
 
 postController.createPhotoPost = async (req, res) => {
     try {
-        console.log('POST: User posting! (createPost)');        
+        console.log('POST: User posting! (createPost)');    
 
+        assert.ok(req.member, Definer.authentication_error5);
         assert.ok(req.file, Definer.general_error3);
         const file = req.file.path.replace(/\\/g, '/');
-        // const file = req.file.path; // Fayl nomini olamiz
-        console.log("req.body", req.body)
-        console.log("file::", file);
-        console.log("req.member", req.member)
+
+        // console.log("req.body", req.body)
+        // console.log("file::", file);
+        // console.log("req.member", req.member);
 
         const post = new Post();
         const result = await post.createPhotoPostData(req.body, file, req.member);
@@ -29,8 +30,9 @@ postController.createPhotoPost = async (req, res) => {
 postController.createArticlePost = async (req, res) => {
     try {
 		console.log('POST: User posting! (createPost)');
+        assert.ok(req.member, Definer.authentication_error5);
         console.log("req.body::", req.body);
-        console.log(req.member)
+        console.log("req.member", req.member);
 
 		const post = new Post();
         const result = await post.createArticlePostData(req.body, req.member);
@@ -47,7 +49,12 @@ postController.createVideoPost = async (req, res) => {
 		console.log('POST: User posting Video! (createVideoPost)');
 
         assert.ok(req.file, Definer.general_error3);
+        assert.ok(req.member, Definer.authentication_error5);
         const file = req.file.path.replace(/\\/g, '/');
+
+        console.log("req.body", req.body);
+        console.log("file::", file);
+        console.log("req.member", req.member);
 
 		const post = new Post();
         const result = await post.createVideoPostData(req.body, file, req.member);
@@ -156,6 +163,25 @@ postController.getAllArticlePosts = async (req, res) => {
         res.json({ state: "success", data: result });        
     } catch (err){
         console.log(`ERORR: getAllArticlePosts!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error finding all article posts!"});
+    }
+};
+
+postController.getChosenPost = async (req, res) => {
+    try {
+        console.log("GET: One post Selected!");
+
+        const postId = req.params.id; // Post ID
+        const postType = req.params.type;
+        // console.log("postId", postId);
+        // console.log("postType", postType);
+
+        const post = new Post();
+        const result = await post.getChosenPostData(req.member, postType, postId);   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: getChosenPost!, ${err.message}`);
 		res.json({state: 'fail', message: "There was an error finding all article posts!"});
     }
 };
