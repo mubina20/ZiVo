@@ -132,6 +132,11 @@ router.post(
     memberController.retrieveAuthMember,
     commentController.createComment
 );
+router.post(
+    "/comment/chosenPostComments",
+    memberController.retrieveAuthMember,
+    commentController.findChosenPostAllComments
+)
 
 //** Chat related routers **//
 router.post(

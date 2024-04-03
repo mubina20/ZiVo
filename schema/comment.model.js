@@ -16,7 +16,7 @@ const CommentSchema = new mongoose.Schema({
         ref: "Post",
         required: false
     },
-    mb_id: { 
+    member: { 
         type: Schema.Types.ObjectId,
         ref: "Member",
         required: false

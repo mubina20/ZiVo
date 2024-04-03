@@ -20,3 +20,20 @@ commentController.createComment = async (req, res) => {
         res.json({ state: "fail", message: "There was an error commenting!" });
     }
 };
+
+commentController.findChosenPostAllComments = async (req, res) => {
+    try{
+        console.log("Get: Get all comments of the selected post!");
+
+        assert.ok(req.member, Definer.authentication_error5);
+        console.log("req.body ::", req.body);
+
+        const comment = new Comment();
+        const result = await comment.findChosenPostAllCommentsData(req.member, req.body);
+
+        res.json({ state: "success", data: result });
+    } catch(err) {
+        console.log(`ERROR: createComment, ${err.message}`);
+        res.json({ state: "fail", message: "There was an error commenting!" });
+    }
+};

@@ -191,25 +191,28 @@ class Post {
 
             if(postType === "photo"){
                 result = await this.photoModel
-				.aggregate([ 
-                    { $match: { _id: id, post_status: 'active' } },
-                    lookup_auth_member_liked(auth_mb_id)
-                ])
-				.exec();
+                    .aggregate([
+                        { $match: { _id: id, post_status: 'active' } },
+                        lookup_auth_member_liked(auth_mb_id)
+                    ])
+                    .exec(); // exec() ni aggregate() dan keyin chaqirish
+                    result = await this.photoModel.populate(result, { path: 'member' }); 
             } else if(postType === "article") {
                 result = await this.articleModel
-				.aggregate([ 
-                    { $match: { _id: id, post_status: 'active' } },
-                    lookup_auth_member_liked(auth_mb_id)
-                ])
-				.exec();
+                    .aggregate([ 
+                        { $match: { _id: id, post_status: 'active' } },
+                        lookup_auth_member_liked(auth_mb_id)
+                    ])
+                    .exec();
+                    result = await this.photoModel.populate(result, { path: 'member' });
             } else if(postType === "video") {
                 result = await this.videoModel
-				.aggregate([ 
-                    { $match: { _id: id, post_status: 'active' } },
-                    lookup_auth_member_liked(auth_mb_id)
-                ])
+                    .aggregate([ 
+                        { $match: { _id: id, post_status: 'active' } },
+                        lookup_auth_member_liked(auth_mb_id)
+                    ])
 				.exec();
+                result = await this.photoModel.populate(result, { path: 'member' });
             } else{
                 return undefined;
             }
