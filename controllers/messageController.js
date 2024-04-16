@@ -22,7 +22,7 @@ messageController.createMessaage = async (req, res) => {
 
 messageController.getMessages = async (req, res) => {
     try{
-        console.log("GET: User Creating Message!");
+        console.log("GET: user received all messages!");
 
         assert.ok(req.member, Definer.authentication_error5);
 

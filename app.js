@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const http = require('http'); 
+const socketIo = require('socket.io');
 
 const router_bssr = require('./router_bssr'); // BSSR
 const router = require('./router'); // SPA
@@ -9,6 +11,7 @@ const cookieParser = require('cookie-parser');
 
 // MongoDB connect
 let session = require('express-session');  
+const Message = require('./models/Message');
 const MongoDBStore = require('connect-mongodb-session')(session); 
 const store = new MongoDBStore({ 
     uri: process.env.MONGO_URL, 
@@ -56,4 +59,26 @@ app.set("view engine", "ejs");
 app.use("/admin", router_bssr); // BSSR
 app.use("/", router); // SPA
 
-module.exports = app; 
+const server = http.createServer(app);
+
+/** SOCKET.IO BACKEND SERVER **/
+const io = require('socket.io')(server, { 
+	serverClient: false, 
+	origins: '*:*', 
+	transport: ['websocket', 'xhr-polling'],
+});
+
+io.on('connection', function(socket){
+    console.log('Client connected');
+    socket.on("disconnect", function() {
+        console.log("User chiqib ketdi!");
+    });
+
+    socket.on("createMsg", function (data) {
+        console.log("Data::", data);
+        io.emit("newMsg", data);
+    });
+});
+/** SOCKET.IO BACKEND SERVER **/
+
+module.exports = server; 

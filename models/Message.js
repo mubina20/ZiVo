@@ -1,4 +1,5 @@
 const MessageModel = require("../schema/message.model");
+const ChatModel = require("../schema/chat.model");
 
 const Definer = require('../lib/mistake');
 const assert = require('assert');
@@ -7,6 +8,7 @@ const { shapeIntoMongooseObjectId } = require('../lib/config');
 class Message {
     constructor() {
         this.messageModel = MessageModel;
+        this.chatModel = ChatModel;
     }
 
     async createMessageData(member, data) {
@@ -22,7 +24,6 @@ class Message {
             });
             
             const MessageResult = await new_message.save();
-
             assert.ok(MessageResult, Definer.message_error1);
 
             return MessageResult;
@@ -32,18 +33,24 @@ class Message {
     };
 
     async getMessagesData(chatId) {
-        try{
+        try {
             const chat_id = shapeIntoMongooseObjectId(chatId);
-
-            const message = await this.messageModel.find({chat_id});
-            
-            assert.ok(message, Definer.message_error2);
-
-            return message;
-        } catch(err) {
-            throw err;
+            const message = await this.messageModel.find({chat_id}).populate('sender_id');
+    
+            const chat = await this.chatModel.findOne({ _id: chatId }).populate('members'); 
+            const members = chat && chat.members ? chat.members : []; 
+    
+            return [{ data: { messages: message, members: members } }];
+        } catch (err) {
+            throw err; 
         }
-    };
+    }
+
+
+    
+    
+    
+    
 
     async reactionMessageData(data) {
         try {

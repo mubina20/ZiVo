@@ -147,12 +147,12 @@ router.post(
 router.get(
     "/chat", 
     memberController.retrieveAuthMember, 
-    chatController.findUserChats
+    chatController.findMyChats
 );
 router.get(
     "/chat/find/:receiver_id", 
     memberController.retrieveAuthMember, 
-    chatController.findChat
+    chatController.getSelectedChat
 );
 
 //** Message related routers **//

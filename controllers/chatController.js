@@ -20,14 +20,14 @@ chatController.createChat = async (req, res) => {
     }
 };
 
-chatController.findUserChats = async (req, res) => {
+chatController.findMyChats = async (req, res) => {
     try{
         console.log("GET: User finding chats!");
 
         assert.ok(req.member, Definer.authentication_error5);
 
         const chat = new Chat();
-        const result = await chat.findUserChatsData(req.member);
+        const result = await chat.findMyChatsData(req.member);
 
         res.json({ state: "success", data: result });
     } catch(err) {
@@ -36,14 +36,14 @@ chatController.findUserChats = async (req, res) => {
     }
 };
 
-chatController.findChat = async (req, res) => {
+chatController.getSelectedChat = async (req, res) => {
     try{
-        console.log("POST: User finding chat!");
+        console.log("GET: User finding chat!");
 
         assert.ok(req.member, Definer.authentication_error5);
 
         const chat = new Chat();
-        const result = await chat.findChatData(req.member, req.params);
+        const result = await chat.getSelectedChatData(req.member, req.params);
 
         res.json({ state: "success", data: result });
     } catch(err) {
