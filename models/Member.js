@@ -177,6 +177,8 @@ class Member {
 				mb_phone: data.mb_phone,
 				mb_address: data.mb_address,
 				mb_description: data.mb_description,
+				mb_hobby: data.mb_hobby,
+				mb_school: data.mb_school,
                 mb_country: data.mb_country,
 				mb_profile_image: image ? image.path.replace(/\\/g, '/') : null,
 			};

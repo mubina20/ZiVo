@@ -32,19 +32,9 @@ const memberSchema = new mongoose.Schema({
         required: true,
         index: {unique: true, sparse: true} 
     },
-    mb_email: {
-        type: String,
-        required: function() {
-            return !(this.mb_phone);
-        },
-        index: {unique: true, sparse: true}
-    },
     mb_phone: {
         type: String,
-        required: function() {
-            return !(this.mb_email);
-        },
-        index: {unique: true, sparse: true}
+        required: true
     }, 
     mb_password: {
         type: String,

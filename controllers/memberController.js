@@ -118,15 +118,21 @@ memberController.getAllMembers = async (req, res) => {
 
 memberController.updateMember = async (req, res) => {
 	try {
-		console.log("POST: User informationni o'zgartirmoqda");
+		console.log("POST: User changing information");
 		
 		assert.ok(req.member, Definer.authentication_error3);
+		console.log("body::", req.body);
+		console.log("file::", req.file)
+
 		const member = new Member();
-		const result = await member.updateMemberData(
-			req.member?._id, 
-			req.body, 
-			req.file
-		);
+
+		let result;
+
+		if (req.file) {
+            result = await member.updateMemberData(req.member, req.body, req.file);
+        } else {
+            result = await member.updateMemberData(req.member, req.body);
+        }
 		
 		res.json({ state: 'success', data: result });
 	} catch (err) {
