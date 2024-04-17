@@ -1,6 +1,5 @@
 const assert = require('assert');
 const Definer = require('../lib/mistake');
-const Follow = require('../models/Follow');
 const Comment = require('../models/Comment');
 
 let commentController = module.exports;
@@ -10,6 +9,7 @@ commentController.createComment = async (req, res) => {
         console.log("POST: User commented!");
 
         assert.ok(req.member, Definer.authentication_error5);
+        // console.log("body", req.body);
 
         const comment = new Comment();
         const result = await comment.createCommentData(req.member, req.body);
