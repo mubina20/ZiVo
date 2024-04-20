@@ -25,29 +25,25 @@ postController.createPhotoPost = async (req, res) => {
         res.json({ state: "fail", message: "There was an error creating the photos post!" });
     }
 };
-postController.postReaction = async (req, res) => {
+postController.editPost = async (req, res) => {
     try {
-        console.log('POST: User posting! (createPost)');    
+        console.log('POST: The user edited the post');    
 
         assert.ok(req.member, Definer.authentication_error5);
-        assert.ok(req.file, Definer.general_error3);
-        const file = req.file.path.replace(/\\/g, '/');
 
-        console.log("req.body", req.body)
-        // console.log("file::", file);
-        // console.log("req.member", req.member);
+        // console.log("req.body", req.body);
 
-        const post_id = req.body.like_ref_id;
-		const post_type = req.body.group_type;
-		const post_reaction = req.body.reaction;
+        const post_id = req.body.post_id;
+		const post_status = req.body.post_status;
+        const post_type = req.body.post_type;
 
         const post = new Post();
-        const result = await post.postReactionData(req.member, post_id, post_type, post_reaction);
+        const result = await post.editPostData(post_id, post_status, post_type);
 
         res.json({ state: 'success', data: result });
     } catch (err) {
         console.log(`ERROR: createPhotoPost, ${err.message}`);
-        res.json({ state: "fail", message: "There was an error creating the photos post!" });
+        res.json({ state: "fail", message: "There was an error editing the post!" });
     }
 };
 

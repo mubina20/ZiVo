@@ -108,9 +108,9 @@ router.post(
     postController.getAllPhotoPosts
 );
 router.post(
-    "/post/reaction",
+    "/post/edit",
     memberController.retrieveAuthMember,
-    postController.postReaction
+    postController.editPost
 )
 
 //** FOLLOWING related routers **//

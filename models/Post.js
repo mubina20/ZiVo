@@ -331,21 +331,67 @@ class Post {
 		}
 	};
 
-    async postReactionData() {
-		try {
-			const result = await this.photoModel
-                .find({
-                    post_status: "active",
-                    post_type: "photo"
-                })
-                .exec();
-
-			assert(result, Definer.post_error8);
-			return result;
-		} catch (err) {
-			throw err;
-		}
-	};
+    async editPostData(id, status, type) {
+        try {
+            id = shapeIntoMongooseObjectId(id);
+    
+            let result;
+    
+            switch (type) {
+                case 'photo':
+                case 'photoStory':
+                    if (status === 'delete') {
+                        result = await this.photoModel.deleteOne({ _id: id }).exec();
+                    } else {
+                        result = await this.photoModel
+                            .findByIdAndUpdate(
+                                { _id: id }, 
+                                { post_status: status }, 
+                                { new: true } 
+                            )
+                            .exec();
+                    }
+                    break;
+                case 'article':
+                case 'articleStory':
+                    if (status === 'delete') {
+                        result = await this.articleModel.deleteOne({ _id: id }).exec();
+                    } else {
+                        result = await this.articleModel
+                            .findByIdAndUpdate(
+                                { _id: id }, 
+                                { post_status: status }, 
+                                { new: true } 
+                            )
+                            .exec();
+                    }
+                    break;
+                case 'video':
+                case 'videoStory':
+                    if (status === 'delete') {
+                        await this.videoModel.deleteOne({ _id: id }).exec();
+                    } else {
+                        result = await this.videoModel
+                            .findByIdAndUpdate(
+                                { _id: id }, 
+                                { post_status: status }, 
+                                { new: true } 
+                            )
+                            .exec();
+                    }
+                    break;
+                default:
+                    throw new Error('Invalid post type');
+            }
+    
+            assert.ok(result, Definer.post_error9);
+    
+            return result;
+        } catch (err) {
+            throw err;
+        }
+    };
+    
 };
 
 module.exports = Post;
