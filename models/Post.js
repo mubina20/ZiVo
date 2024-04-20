@@ -32,7 +32,7 @@ class Post {
 
             assert.ok(result, Definer.post_error2);
 
-            if (post_type === "story") {
+            if (post_type === "photoStory") {
                 setTimeout(async () => {
                     await this.photoModel.findByIdAndDelete(result._id);
                 }, 24 * 60 * 60 * 1000); 
@@ -65,7 +65,7 @@ class Post {
 
             assert.ok(result, Definer.post_error3);
 
-            if (post_type === "story") {
+            if (post_type === "articleStory") {
                 setTimeout(async () => {
                     await this.photoModel.findByIdAndDelete(result._id);
                 }, 24 * 60 * 60 * 1000); 
@@ -94,7 +94,7 @@ class Post {
 
             assert.ok(result, Definer.post_error4);
 
-            if (post_type === "story") {
+            if (post_type === "videoStory") {
                 setTimeout(async () => {
                     await this.photoModel.findByIdAndDelete(result._id);
                 }, 24 * 60 * 60 * 1000); 
@@ -316,6 +316,22 @@ class Post {
 	};
 
     async getAllPhotoPostsData() {
+		try {
+			const result = await this.photoModel
+                .find({
+                    post_status: "active",
+                    post_type: "photo"
+                })
+                .exec();
+
+			assert(result, Definer.post_error8);
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	};
+
+    async postReactionData() {
 		try {
 			const result = await this.photoModel
                 .find({

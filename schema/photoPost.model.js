@@ -22,7 +22,7 @@ const photoSchema = new mongoose.Schema({
         required: true,
         default: "photo",
         enum: {
-            values: ['photo', 'story'],
+            values: ['photo', 'photoStory'],
             message: "{VALUES} is not among permitted values!"
         }
     },

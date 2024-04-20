@@ -31,7 +31,7 @@ const articleSchema = new mongoose.Schema({
         required: true,
         default: "article",
         enum: {
-            values: ['article', 'story'],
+            values: ['article', 'articleStory'],
             message: "{VALUES} is not among permitted values!"
         }
     },

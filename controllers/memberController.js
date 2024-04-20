@@ -79,7 +79,7 @@ memberController.createToken = (user) => {
 memberController.getChosenMember = async (req, res) => {
 	try {
 		console.log('GET: One Member chosen!');
-		console.log("req.params.id", req.params.id);
+		// console.log("req.params.id", req.params.id);
 
 		const id = req.params.id;
 		const member = new Member();

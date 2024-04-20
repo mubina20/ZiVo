@@ -32,7 +32,7 @@ class View {
 						.findOne({
 							_id: view_ref_id,
 							post_status: 'active',
-							post_type: "story"
+							post_type: "photoStory"
 						})
 						.exec();
 					break;
@@ -41,7 +41,7 @@ class View {
 						.findOne({
 							_id: view_ref_id,
 							post_status: 'active',
-							post_type: "story"
+							post_type: "articleStory"
 						})
 						.exec();
 					break;
@@ -50,7 +50,7 @@ class View {
 						.findOne({
 							_id: view_ref_id,
 							post_status: 'active',
-							post_type: "story"
+							post_type: "videoStory"
 						})
 						.exec();
 					break;

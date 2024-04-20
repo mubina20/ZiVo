@@ -107,6 +107,11 @@ router.post(
     memberController.retrieveAuthMember,
     postController.getAllPhotoPosts
 );
+router.post(
+    "/post/reaction",
+    memberController.retrieveAuthMember,
+    postController.postReaction
+)
 
 //** FOLLOWING related routers **//
 router.post(

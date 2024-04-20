@@ -82,9 +82,9 @@ class Member {
 			}
 
 			const result = await this.memberModel.aggregate(aggregateQuery).exec();
-            console.log('result', result);
+            // console.log('result', result);
 			assert.ok(result, Definer.general_error2);
-            console.log('result', result);
+            // console.log('result', result);
 
 			return result[0];
         } catch(err) {

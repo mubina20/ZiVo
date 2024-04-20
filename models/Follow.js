@@ -113,29 +113,39 @@ class Follow {
             const subscriber_id = shapeIntoMongooseObjectId(inquery.mb_id);
     
             const result = await this.followModel
-            .aggregate([
-                { $match: { subscriber_id: subscriber_id } },
-                { $sort: { createdAt: -1 } },
-                {
-                    $lookup: {
-                    from: "members",
-                    localField: "follow_id",
-                    foreignField: "_id",
-                    as: "follow_member_data",
+                .aggregate([
+                    { $match: { subscriber_id: subscriber_id } },
+                    { $sort: { createdAt: -1 } },
+                    {
+                        $lookup: {
+                            from: "members",
+                            localField: "follow_id",
+                            foreignField: "_id",
+                            as: "follow_member_data",
+                        },
                     },
-                },
-                { $unwind: "$follow_member_data" }
-            ])
-            .exec();
+                    {
+                        $lookup: {
+                            from: "photo",
+                            localField: "subscriber_id", // FollowModeldagi foydalanuvchi IDsi
+                            foreignField: "member", // PhotoModeldagi foydalanuvchi IDsi
+                            as: "photo_data",
+                        },
+                    },
+                    { $unwind: "$follow_member_data" }
+                ])
+                .exec();
     
             assert.ok(result, Definer.follow_error3);
             // console.log("RESULT:::", result);
-
+    
             return result;
         } catch (err) {
             throw err;
         }
     };
+    
+    
 
     // Member's Followers
     async getMemberFollowersData(member, inquery) {

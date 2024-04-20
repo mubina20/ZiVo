@@ -79,11 +79,6 @@ const memberSchema = new mongoose.Schema({
         default: "Information not entered",
         required: false
     },
-    mb_company: {
-        type: String,
-        default: "Information not entered",
-        required: false
-    },
     mb_hobby: {
         type: String,
         default: "Information not entered",

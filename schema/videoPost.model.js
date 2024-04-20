@@ -22,7 +22,7 @@ const videoSchema = new mongoose.Schema({
         required: true,
         default: "video",
         enum: {
-            values: ['video', 'story'],
+            values: ['video', 'videoStory'],
             message: "{VALUES} is not among permitted values!"
         }
     },
@@ -55,5 +55,6 @@ const videoSchema = new mongoose.Schema({
         required: false
     }
 }, {timestamps: true});
+// ['cry', 'dislike', 'hart', 'laugh', 'angry', 'clap', 'notReaction']
 
 module.exports = mongoose.model("Video", videoSchema);

@@ -12,12 +12,37 @@ postController.createPhotoPost = async (req, res) => {
         assert.ok(req.file, Definer.general_error3);
         const file = req.file.path.replace(/\\/g, '/');
 
-        // console.log("req.body", req.body)
+        console.log("req.body", req.body)
         // console.log("file::", file);
         // console.log("req.member", req.member);
 
         const post = new Post();
         const result = await post.createPhotoPostData(req.body, file, req.member);
+
+        res.json({ state: 'success', data: result });
+    } catch (err) {
+        console.log(`ERROR: createPhotoPost, ${err.message}`);
+        res.json({ state: "fail", message: "There was an error creating the photos post!" });
+    }
+};
+postController.postReaction = async (req, res) => {
+    try {
+        console.log('POST: User posting! (createPost)');    
+
+        assert.ok(req.member, Definer.authentication_error5);
+        assert.ok(req.file, Definer.general_error3);
+        const file = req.file.path.replace(/\\/g, '/');
+
+        console.log("req.body", req.body)
+        // console.log("file::", file);
+        // console.log("req.member", req.member);
+
+        const post_id = req.body.like_ref_id;
+		const post_type = req.body.group_type;
+		const post_reaction = req.body.reaction;
+
+        const post = new Post();
+        const result = await post.postReactionData(req.member, post_id, post_type, post_reaction);
 
         res.json({ state: 'success', data: result });
     } catch (err) {
@@ -31,8 +56,8 @@ postController.createArticlePost = async (req, res) => {
     try {
 		console.log('POST: User posting! (createPost)');
         assert.ok(req.member, Definer.authentication_error5);
-        console.log("req.body::", req.body);
-        console.log("req.member", req.member);
+        // console.log("req.body::", req.body);
+        // console.log("req.member", req.member);
 
 		const post = new Post();
         const result = await post.createArticlePostData(req.body, req.member);
