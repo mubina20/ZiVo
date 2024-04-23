@@ -1,6 +1,7 @@
 const PhotoModel = require("../schema/photoPost.model");
 const ArticleModel = require("../schema/articlePost.model");
 const VideoModel = require("../schema/videoPost.model");
+const SavedModel = require("../schema/saved.model");
 
 const Definer = require('../lib/mistake');
 const assert = require('assert');
@@ -12,6 +13,7 @@ class Post {
         this.photoModel = PhotoModel;
         this.articleModel = ArticleModel;
         this.videoModel = VideoModel;
+        this.savedModel = SavedModel;
     }
 
     async createPhotoPostData(data, photosPath, member) {
@@ -189,7 +191,7 @@ class Post {
 
             let result;
 
-            if(postType === "photo"){
+            if(postType === "photo" || postType === "photoStory"){
                 result = await this.photoModel
                     .aggregate([
                         { $match: { _id: id, post_status: 'active' } },
@@ -197,7 +199,7 @@ class Post {
                     ])
                     .exec(); // exec() ni aggregate() dan keyin chaqirish
                     result = await this.photoModel.populate(result, { path: 'member' }); 
-            } else if(postType === "article") {
+            } else if(postType === "article" || postType === "articleStory") {
                 result = await this.articleModel
                     .aggregate([ 
                         { $match: { _id: id, post_status: 'active' } },
@@ -205,7 +207,7 @@ class Post {
                     ])
                     .exec();
                     result = await this.photoModel.populate(result, { path: 'member' });
-            } else if(postType === "video") {
+            } else if(postType === "video" || postType === "videoStory") {
                 result = await this.videoModel
                     .aggregate([ 
                         { $match: { _id: id, post_status: 'active' } },
@@ -221,27 +223,6 @@ class Post {
 			assert.ok(result, Definer.general_error1);
 
 			return result[0];
-		} catch (err) {
-			throw err;
-		}
-	};
-
-    async statusPostData(data) {
-		try {
-			const post_id = shapeIntoMongooseObjectId(data.post_id); 
-            const status = data.post_status
-
-			const result = await this.postModel
-                .findByIdAndUpdate(
-                    {_id: post_id }, 
-                    { post_status: status }, 
-                    { new: true } 
-                )
-                .exec();
-
-			assert.ok(result, Definer.post_error1);
-
-			return result;
 		} catch (err) {
 			throw err;
 		}
@@ -273,7 +254,7 @@ class Post {
             result.push(...articlePosts, ...videoPosts, ...photoPosts);
             result.sort(() => Math.random() - 0.5);
 
-            assert(result.length > 0, Definer.post_error9);
+            assert(result, Definer.post_error9);
             // console.log("result", result);
     
             return result;
@@ -369,7 +350,7 @@ class Post {
                 case 'video':
                 case 'videoStory':
                     if (status === 'delete') {
-                        await this.videoModel.deleteOne({ _id: id }).exec();
+                        result = await this.videoModel.deleteOne({ _id: id }).exec();
                     } else {
                         result = await this.videoModel
                             .findByIdAndUpdate(
@@ -391,6 +372,108 @@ class Post {
             throw err;
         }
     };
+
+    async savedPostData(member, savedPost, type) {
+        try{
+            const mb_id = shapeIntoMongooseObjectId(member._id);
+
+            const new_post = new this.savedModel({
+                savedPost: savedPost,
+                post_type: type,
+                member: mb_id
+            });
+            const result = await new_post.save();
+
+            assert.ok(result, Definer.post_error4);
+
+            return result;
+        } catch(err) {
+            throw err;
+        }
+    };
+
+    // async getAllSavedPostsData() {
+    //     try {
+    //         const allSavedPosts = await this.savedModel.aggregate([
+    //             {
+    //                 $lookup: {
+    //                     from: "articles", // Article model nomi
+    //                     localField: "savedPost",
+    //                     foreignField: "_id",
+    //                     as: "article" // Natija massiv nomi
+    //                 }
+    //             },
+    //             {
+    //                 $lookup: {
+    //                     from: "videos", // Video model nomi
+    //                     localField: "savedPost",
+    //                     foreignField: "_id",
+    //                     as: "video" // Natija massiv nomi
+    //                 }
+    //             },
+    //             {
+    //                 $lookup: {
+    //                     from: "photos", // Photo model nomi
+    //                     localField: "savedPost",
+    //                     foreignField: "_id",
+    //                     as: "photo" // Natija massiv nomi
+    //                 }
+    //             },
+    //             {
+    //                 $project: {
+    //                     member: 1,
+    //                     article: { $arrayElemAt: ["$article", 0] },
+    //                     video: { $arrayElemAt: ["$video", 0] },
+    //                     photo: { $arrayElemAt: ["$photo", 0] }
+    //                 }
+    //             }
+    //         ]);
+    
+    //         return allSavedPosts;
+    //     } catch (err) {
+    //         throw err;
+    //     }
+    // };
+
+    async getAllSavedPostsData() {
+        try {
+            const allSavedPhotos = await this.savedModel.aggregate([
+                {
+                    $lookup: {
+                        from: "photos", // Photo model nomi
+                        localField: "savedPost",
+                        foreignField: "_id",
+                        as: "photo" // Natija massiv nomi
+                    }
+                },
+                {
+                    $project: {
+                        member: 1,
+                        photo: { $arrayElemAt: ["$photo", 0] }
+                    }
+                }
+            ]);
+    
+            return allSavedPhotos;
+        } catch (err) {
+            throw err;
+        }
+    };
+    
+
+    // async getAllSavedPostsData() {
+    //     try {
+    //         const allSavedPosts = await this.savedModel.find().exec();
+    
+    //         // Barcha saqlangan postlarni chiqarish
+    //         return allSavedPosts;
+    //     } catch (err) {
+    //         throw err;
+    //     }
+    // };
+    
+    
+    
     
 };
 

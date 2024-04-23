@@ -166,12 +166,29 @@ class Follow {
                 { $unwind: "$subscriber_member_data" }
             ];
     
-            if (member && member._id === inquery.mb_id) { 
+            if (member) { 
                 aggregateQuery.push(lookup_auth_member_following(follow_id, 'follows'));
             }
         
             const result = await this.followModel.aggregate(aggregateQuery).exec();
             assert.ok(result, Definer.follow_error3);
+
+            return result;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async chosenMemberFollowData(member, follow_id) {
+        try {
+            follow_id = shapeIntoMongooseObjectId(follow_id);
+            const mb_id = shapeIntoMongooseObjectId(member);
+    
+            const result = await this.followModel
+            .find(
+                { follow_id: follow_id, subscriber_id: mb_id }
+            )
+            .exec();
 
             return result;
         } catch (err) {

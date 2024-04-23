@@ -40,16 +40,21 @@ class Comment {
                 lookup_auth_member_liked(mb_id)
             ]);
     
-            if (commentResult.length === 0) {
-                throw new Error(Definer.comment_error1);
-            }
+            // Komentariylar yo'qolishiga doir xatolikni tekshirish (kerak bo'lsa)
+            // if (commentResult.length === 0) {
+            //     throw new Error(Definer.comment_error1);
+            // }
+    
+            // Komentariylarni murojaatlovchiga moslashtirish
             commentResult = await this.commentModel.populate(commentResult, { path: 'member' });
     
+            // Komentariylarni qaytarish
             return commentResult;
         } catch (err) {
             throw err;
         }
     };
+    
     
     
     

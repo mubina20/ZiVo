@@ -31,7 +31,7 @@ postController.editPost = async (req, res) => {
 
         assert.ok(req.member, Definer.authentication_error5);
 
-        // console.log("req.body", req.body);
+        console.log("req.body", req.body);
 
         const post_id = req.body.post_id;
 		const post_status = req.body.post_status;
@@ -194,8 +194,8 @@ postController.getChosenPost = async (req, res) => {
 
         const postId = req.params.id; // Post ID
         const postType = req.params.type;
-        // console.log("postId", postId);
-        // console.log("postType", postType);
+        console.log("postId", postId);
+        console.log("postType", postType);
 
         const post = new Post();
         const result = await post.getChosenPostData(req.member, postType, postId);   
@@ -213,6 +213,38 @@ postController.getAllPhotoPosts = async (req, res) => {
 
         const post = new Post();
         const result = await post.getAllPhotoPostsData();   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: getAllPhotoPosts!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error finding all photo posts!"});
+    }
+};
+
+postController.savedPost = async (req, res) => {
+    try {
+        console.log("POST: all photo posts are being received!");
+
+        console.log("body::", req.body);
+        const savedPost = req.body.post_id;
+        const post_type = req.body.post_type;
+
+        const post = new Post();
+        const result = await post.savedPostData(req.member, savedPost, post_type);   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: getAllPhotoPosts!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error finding all photo posts!"});
+    }
+};
+
+postController.getAllSavedPosts = async (req, res) => {
+    try {
+        console.log("POST: all photo posts are being received!");
+
+        const post = new Post();
+        const result = await post.getAllSavedPostsData();   
         
         res.json({ state: "success", data: result });        
     } catch (err){

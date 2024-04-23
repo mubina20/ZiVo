@@ -111,7 +111,17 @@ router.post(
     "/post/edit",
     memberController.retrieveAuthMember,
     postController.editPost
-)
+);
+router.post(
+    "/post/saved",
+    memberController.retrieveAuthMember,
+    postController.savedPost
+);
+router.get(
+    "/post/all-savedPosts",
+    memberController.retrieveAuthMember,
+    postController.getAllSavedPosts
+);
 
 //** FOLLOWING related routers **//
 router.post(
@@ -130,6 +140,11 @@ router.get(
     memberController.retrieveAuthMember,
     followController.getMemberFollowers
 );
+router.get(
+    "/follow/:follow_id",
+    memberController.retrieveAuthMember,
+    followController.chosenMemberFollow
+);
 
 //** COMMENT related routers **//
 router.post(
@@ -141,7 +156,7 @@ router.post(
     "/comment/chosenPostComments",
     memberController.retrieveAuthMember,
     commentController.findChosenPostAllComments
-)
+);
 
 //** Chat related routers **//
 router.post(

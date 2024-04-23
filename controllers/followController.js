@@ -63,3 +63,20 @@ followController.getMemberFollowers = async (req, res) => {
         res.json({ state: "fail", message: "There was an error viewing the Followers!" });
     }
 };
+
+followController.chosenMemberFollow = async (req, res) => {
+    try {
+        console.log("GET: User is viewing Followers!");
+
+        const follow_id = req.params.follow_id;
+        // console.log("follow_id::", follow_id);
+        
+        const follow = new Follow();
+        const result = await follow.chosenMemberFollowData(req.member, follow_id);
+    
+        res.json({ state: "success", data: result });
+    } catch (err) {
+        console.log(`ERROR: getMemberFollowers, ${err.message}`);
+        res.json({ state: "fail", message: "There was an error viewing the Followers!" });
+    }
+};
