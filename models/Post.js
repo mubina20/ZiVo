@@ -263,6 +263,25 @@ class Post {
         }
     }; 
     
+    async getAllStoriesData() {
+		try {
+            let result = [];
+
+            const articlePosts = await this.articleModel.find({ post_status: "active", post_type: "articleStory" }).populate('member');
+            const videoPosts = await this.videoModel.find({ post_status: 'active', post_type: "articleStory" }).populate('member');
+            const photoPosts = await this.photoModel.find({ post_status: 'active', post_type: "articleStory" }).populate('member');
+
+            result.push(...articlePosts, ...videoPosts, ...photoPosts);
+            result.sort(() => Math.random() - 0.5);
+
+            assert(result, Definer.post_error9);
+			
+			assert(result, Definer.general_error1);
+			return result;
+		} catch (err) {
+			throw err;
+		}
+	}
 
     async getAllVideoPostsData() {
 		try {

@@ -59,11 +59,6 @@ const memberSchema = new mongoose.Schema({
             message: "{VALUES} is not among permitted values!"
         }
     },
-    mb_address: {
-        type: String,
-        default: "Information not entered",
-        required: false
-    },
     mb_description: {
         type: String,
         default: "Information not entered",

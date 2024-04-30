@@ -160,6 +160,20 @@ postController.getAllPosts = async (req, res) => {
     }
 };
 
+postController.getAllStories = async (req, res) => {
+    try {
+        console.log("POST: All posts are being received!");
+
+        const post = new Post();
+        const result = await post.getAllStoriesData();   
+        
+        res.json({ state: "success", data: result });        
+    } catch (err){
+        console.log(`ERORR: getAllPosts!, ${err.message}`);
+		res.json({state: 'fail', message: "There was an error finding all posts!"});
+    }
+};
+
 postController.getAllVideoPosts = async (req, res) => {
     try {
         console.log("POST: all video posts are being received!");

@@ -92,6 +92,11 @@ router.get(
     memberController.retrieveAuthMember,
     postController.getAllPosts
 );
+router.get(
+    "/post/all-stories",
+    memberController.retrieveAuthMember,
+    postController.getAllStories
+);
 router.post(
     "/post/all-videoPosts",
     memberController.retrieveAuthMember,
