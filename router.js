@@ -32,11 +32,6 @@ router.post(
     memberController.retrieveAuthMember,
     memberController.likeMemberChosen
 );
-router.get(
-    "/my-liked-posts",
-    memberController.retrieveAuthMember,
-    memberController.findMyLikedPosts
-)
 router.post(
 	'/member/update',
 	memberController.retrieveAuthMember,

@@ -35,7 +35,6 @@ memberController.loginProcess = async (req, res) => {
         const result = await member.loginData(req.body);
 
         const token = memberController.createToken(result);
-        // console.log("TOKEN:::", token);
         res.cookie('access_token', token, {
 			maxAge: 6 * 3600 * 1000,
 			httpOnly: false,
@@ -87,7 +86,7 @@ memberController.getChosenMember = async (req, res) => {
 
 		res.json({ state: 'success', data: result });
 	} catch (err) {
-		console.log(`ERORR, cont/getChosenMember, ${err.message}`);
+		console.log(`ERORR: getAllMembers, ${err.message}`);
 
 		const error = {
             state: "Fail",
@@ -121,8 +120,8 @@ memberController.updateMember = async (req, res) => {
 		console.log("POST: User changing information");
 		
 		assert.ok(req.member, Definer.authentication_error3);
-		console.log("body::", req.body);
-		console.log("file::", req.file)
+		// console.log("body::", req.body);
+		// console.log("file::", req.file);
 
 		const member = new Member();
 
@@ -146,7 +145,7 @@ memberController.likeMemberChosen = async (req, res) => {
 		console.log('POST: User liked! (likeMemberChosen)');
 
 		assert.ok(req.member, Definer.authentication_error5);
-		console.log("req.body", req.body)
+		// console.log("req.body", req.body);
 		
 		const like_ref_id = req.body.like_ref_id;
 		const group_type = req.body.group_type;
@@ -160,25 +159,6 @@ memberController.likeMemberChosen = async (req, res) => {
 		res.json({state: 'fail!', message: "There was an error while trying to like"});
 	}
 };
-
-memberController.findMyLikedPosts = async (req, res) => {
-	try {
-		console.log("GET: Member is viewing self liked posts");
-
-		assert.ok(req.member, Definer.authentication_error5);
-		console.log(req.member);
-		const mb_id = req.member;
-
-		const like = new Like(mb_id);
-		
-		const result = await like.findMyLikedPostsData(req.member);
-
-		res.json({ state: 'success', data: result });
-	} catch(err) {
-		console.log(`ERORR: findMyLikedPosts!, ${err.message}`);
-		res.json({state: 'fail', message: "There was an error finding all me liked posts!"});
-	}
-}
 
 memberController.retrieveAuthMember = async (req, res, next) => {
 	try {

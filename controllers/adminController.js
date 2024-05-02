@@ -1,7 +1,4 @@
 const Member = require('../models/Member');
-const assert = require('assert');
-const Definer = require('../lib/mistake');
-const Post = require('../models/Post');
 
 let adminController = module.exports;
 
@@ -29,7 +26,7 @@ adminController.loginProcess = async (req, res) => {
 
         const error = {
             state: "Fail",
-            message: "Login qilishda xatolik bo'ldi!"
+            message: "There was an error Login!"
         }
         res.render("error", { error: error });
     }
@@ -39,32 +36,20 @@ adminController.home = async (req, res) => {
     try{
         console.log("GET: Admin entered the HomePage");
 
-        res.render("admin-homepage");
+        const member = new Member();
+        const members_data = await member.getAllMembersData();
+
+        if (req.session) {
+            res.render('controll-page', { members_data: members_data });
+        } else {
+            res.render('login');
+        }
     } catch(err) {
         console.log(`ERROR: ADMIN HomePage! ${err.message}`);
         
         const error = {
             state: "Fail",
-            message: "Login qilishda xatolik bo'ldi!"
-        }
-        res.render("error", { error: error });
-    }
-};
-
-adminController.getAllMembers = async (req, res) => {
-    try{
-        console.log("GET: Admin entered the Members page!");
-
-        const member = new Member();
-		const members_data = await member.getAllMembersData();
-
-		res.render('members-page', { members_data: members_data });
-    } catch(err) {
-        console.log(`ERROR: ADMIN Page! ${err.message}`);
-        
-        const error = {
-            state: "Fail",
-            message: "Admin Pagega kirishda xatolik bo'ldi!"
+            message: "There was an error enterd to homepage!"
         }
         res.render("error", { error: error });
     }
@@ -76,20 +61,6 @@ adminController.updateMemberByAdmin = async (req, res) => {
 
 		const member = new Member();
 		const result = await member.updateMemberByAdminData(req.body);
-
-		await res.json({ state: 'success', data: result });
-	} catch (err) {
-		console.log(`ERROR: updateMemberByAdmin, ${err.message}`);
-		res.json({ state: 'fail!', message: "There was an error when Admin updating user's information!" });
-	}
-};
-
-adminController.getMembersByCountry = async (req, res) => {
-	try {
-		console.log("POST: Admin restaurantni o'zgartirmoqda");
-
-		const member = new Member();
-		const result = await member.getMembersByCountryData();
 
 		await res.json({ state: 'success', data: result });
 	} catch (err) {
@@ -117,11 +88,11 @@ adminController.logout = (req, res) => {
         console.log("GET: Admin Logout!");
 
         req.session.destroy(function() {
-            res.redirect("/admin");
+            res.render('login');
         });
 
     } catch(err) {
-        console.log(`ERROR: logout qilishda xatolik boldi! ${err.message}`);
-        res.json({state: 'muvaffaqiyatsiz!', message: err.message});
+        console.log(`ERROR: Logout! ${err.message}`);
+        res.json({state: 'fail!', message: err.message});
     }
 };

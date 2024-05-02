@@ -169,25 +169,6 @@ class Like {
 			throw err;
 		}
 	};
-    
-    async findMyLikedPostsData(member) {
-        try {
-            const mb_id = member._id; 
-            const result = await this.likeModel
-                .find({ 
-                    mb_id: mb_id, 
-                    // like_group: { $in: ["photo", "video", "article"] } 
-                })
-                .exec();
-    
-            assert(result, Definer.post_error7);
-    
-            return result;
-        } catch (err) {
-            throw new Error(Definer.mongo_validation_err1);
-        }
-    };
-    
 };
 
 module.exports = Like;

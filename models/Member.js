@@ -217,44 +217,6 @@ class Member {
 			throw err;
 		}
 	};
-
-    async getMembersByCountryData() {
-		try {
-			// Barcha postlarni olish
-            const posts = await this.memberModel.find({});
-
-            const countries = posts.map(post => post.mb_country);
-    
-            const uniqueCountries = [...new Set(countries)];
-    
-            return uniqueCountries;
-		} catch (err) {
-			throw err;
-		}
-	};
-
-    async findMyLikedPostsData(member) {
-		try {
-			// const mb_id = shapeIntoMongooseObjectId(member._id);
-
-            const result = await this.likeModel
-                // .find({
-                //     mb_id: mb_id,
-                //     like_group: ["photo", "video", "article"]
-                // })
-                .findById({ 
-                    mb_id: mb_id, 
-                    like_group: { $in: ["photo", "video", "article"] } 
-                })
-                .exec();
-
-			assert(result, Definer.post_error7);
-
-			return result;
-		} catch (err) {
-			throw new Error(Definer.mongo_validation_err1);
-		}
-	};
 };
 
 module.exports = Member;

@@ -98,7 +98,7 @@ class Post {
 
             if (post_type === "videoStory") {
                 setTimeout(async () => {
-                    await this.photoModel.findByIdAndDelete(result._id);
+                    await this.videoModel.findByIdAndDelete(result._id);
                 }, 24 * 60 * 60 * 1000); 
             }
 
@@ -197,7 +197,7 @@ class Post {
                         { $match: { _id: id, post_status: 'active' } },
                         lookup_auth_member_liked(auth_mb_id)
                     ])
-                    .exec(); // exec() ni aggregate() dan keyin chaqirish
+                    .exec(); 
                     result = await this.photoModel.populate(result, { path: 'member' }); 
             } else if(postType === "article" || postType === "articleStory") {
                 result = await this.articleModel
@@ -262,74 +262,6 @@ class Post {
             throw err;
         }
     }; 
-    
-    async getAllStoriesData() {
-		try {
-            let result = [];
-
-            const articlePosts = await this.articleModel.find({ post_status: "active", post_type: "articleStory" }).populate('member');
-            const videoPosts = await this.videoModel.find({ post_status: 'active', post_type: "articleStory" }).populate('member');
-            const photoPosts = await this.photoModel.find({ post_status: 'active', post_type: "articleStory" }).populate('member');
-
-            result.push(...articlePosts, ...videoPosts, ...photoPosts);
-            result.sort(() => Math.random() - 0.5);
-
-            assert(result, Definer.post_error9);
-			
-			assert(result, Definer.general_error1);
-			return result;
-		} catch (err) {
-			throw err;
-		}
-	}
-
-    async getAllVideoPostsData() {
-		try {
-			const result = await this.videoModel
-                .find({
-                    post_status: "active",
-                    post_type: "video"
-                })
-                .exec();
-
-			assert(result, Definer.post_error6);
-			return result;
-		} catch (err) {
-			throw err;
-		}
-	};
-
-    async getAllArticlePostsData() {
-		try {
-			const result = await this.articleModel
-                .find({
-                    post_status: "active",
-                    post_type: "article"
-                })
-                .exec();
-
-			assert(result, Definer.post_error7);
-			return result;
-		} catch (err) {
-			throw err;
-		}
-	};
-
-    async getAllPhotoPostsData() {
-		try {
-			const result = await this.photoModel
-                .find({
-                    post_status: "active",
-                    post_type: "photo"
-                })
-                .exec();
-
-			assert(result, Definer.post_error8);
-			return result;
-		} catch (err) {
-			throw err;
-		}
-	};
 
     async editPostData(id, status, type) {
         try {
@@ -411,49 +343,6 @@ class Post {
         }
     };
 
-    // async getAllSavedPostsData() {
-    //     try {
-    //         const allSavedPosts = await this.savedModel.aggregate([
-    //             {
-    //                 $lookup: {
-    //                     from: "articles", // Article model nomi
-    //                     localField: "savedPost",
-    //                     foreignField: "_id",
-    //                     as: "article" // Natija massiv nomi
-    //                 }
-    //             },
-    //             {
-    //                 $lookup: {
-    //                     from: "videos", // Video model nomi
-    //                     localField: "savedPost",
-    //                     foreignField: "_id",
-    //                     as: "video" // Natija massiv nomi
-    //                 }
-    //             },
-    //             {
-    //                 $lookup: {
-    //                     from: "photos", // Photo model nomi
-    //                     localField: "savedPost",
-    //                     foreignField: "_id",
-    //                     as: "photo" // Natija massiv nomi
-    //                 }
-    //             },
-    //             {
-    //                 $project: {
-    //                     member: 1,
-    //                     article: { $arrayElemAt: ["$article", 0] },
-    //                     video: { $arrayElemAt: ["$video", 0] },
-    //                     photo: { $arrayElemAt: ["$photo", 0] }
-    //                 }
-    //             }
-    //         ]);
-    
-    //         return allSavedPosts;
-    //     } catch (err) {
-    //         throw err;
-    //     }
-    // };
-
     async getAllSavedPostsData() {
         try {
             const allSavedPhotos = await this.savedModel.aggregate([
@@ -477,23 +366,7 @@ class Post {
         } catch (err) {
             throw err;
         }
-    };
-    
-
-    // async getAllSavedPostsData() {
-    //     try {
-    //         const allSavedPosts = await this.savedModel.find().exec();
-    
-    //         // Barcha saqlangan postlarni chiqarish
-    //         return allSavedPosts;
-    //     } catch (err) {
-    //         throw err;
-    //     }
-    // };
-    
-    
-    
-    
+    };    
 };
 
 module.exports = Post;
