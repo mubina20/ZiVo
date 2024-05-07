@@ -9,7 +9,6 @@ let memberController = module.exports;
 memberController.signupProcess = async (req, res) => {
     try{
         console.log("POST: Signup");
-		console.log("SignUp req.body", req.body)
 
         const member = new Member(); 
         const new_member = await member.signupData(req.body); 
@@ -86,7 +85,7 @@ memberController.getChosenMember = async (req, res) => {
 
 		res.json({ state: 'success', data: result });
 	} catch (err) {
-		console.log(`ERORR: getAllMembers, ${err.message}`);
+		console.log(`ERORR: getChosenMember, ${err.message}`);
 
 		const error = {
             state: "Fail",

@@ -66,7 +66,7 @@ followController.getMemberFollowers = async (req, res) => {
 
 followController.chosenMemberFollow = async (req, res) => {
     try {
-        console.log("GET: User is viewing Followers!");
+        console.log("GET: chosenMemberFollow!");
 
         const follow_id = req.params.follow_id;
         // console.log("follow_id::", follow_id);
@@ -76,7 +76,7 @@ followController.chosenMemberFollow = async (req, res) => {
     
         res.json({ state: "success", data: result });
     } catch (err) {
-        console.log(`ERROR: getMemberFollowers, ${err.message}`);
-        res.json({ state: "fail", message: "There was an error viewing the Followers!" });
+        console.log(`ERROR: chosenMemberFollow, ${err.message}`);
+        res.json({ state: "fail", message: "There was an error chosenMemberFollow!" });
     }
 };

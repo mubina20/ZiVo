@@ -57,7 +57,7 @@ adminController.home = async (req, res) => {
 
 adminController.updateMemberByAdmin = async (req, res) => {
 	try {
-		console.log("POST: Admin restaurantni o'zgartirmoqda");
+		console.log("POST: Admin updated member's status");
 
 		const member = new Member();
 		const result = await member.updateMemberByAdminData(req.body);

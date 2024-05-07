@@ -127,8 +127,8 @@ class Follow {
                     {
                         $lookup: {
                             from: "photo",
-                            localField: "subscriber_id", // FollowModeldagi foydalanuvchi IDsi
-                            foreignField: "member", // PhotoModeldagi foydalanuvchi IDsi
+                            localField: "subscriber_id",
+                            foreignField: "member", 
                             as: "photo_data",
                         },
                     },
@@ -145,8 +145,6 @@ class Follow {
         }
     };
     
-    
-
     // Member's Followers
     async getMemberFollowersData(member, inquery) {
         try {

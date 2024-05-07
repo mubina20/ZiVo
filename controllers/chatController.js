@@ -38,7 +38,7 @@ chatController.findMyChats = async (req, res) => {
 
 chatController.getSelectedChat = async (req, res) => {
     try{
-        console.log("GET: User finding chat!");
+        console.log("GET: User selected chat!");
 
         assert.ok(req.member, Definer.authentication_error5);
 

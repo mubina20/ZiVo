@@ -46,12 +46,6 @@ class Message {
         }
     }
 
-
-    
-    
-    
-    
-
     async reactionMessageData(data) {
         try {
             const message_id = shapeIntoMongooseObjectId(data.message_id);

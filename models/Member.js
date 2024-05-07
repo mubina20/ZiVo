@@ -115,10 +115,10 @@ class Member {
             const like = new Like(mb_id);
             const isValid = await like.validateTargetItem(like_ref_id, group_type);
             assert.ok(isValid, Definer.general_error2);
-            console.log("isValid:::", isValid);
+            // console.log("isValid:::", isValid);
 
             const doesExist = await like.checkLikeExistence(like_ref_id);
-            console.log("doesExist:::", doesExist);
+            // console.log("doesExist:::", doesExist);
 
             let data = doesExist
 				? await like.removeMemberLike(like_ref_id, group_type)
@@ -131,7 +131,6 @@ class Member {
 				like_ref_id: data.like_ref_id,
 				like_status: doesExist ? 0 : 1,
 			};
-            console.log("RESULT:::", result);
 
 			return result;
         } catch(err) {

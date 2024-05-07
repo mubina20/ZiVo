@@ -323,50 +323,6 @@ class Post {
             throw err;
         }
     };
-
-    async savedPostData(member, savedPost, type) {
-        try{
-            const mb_id = shapeIntoMongooseObjectId(member._id);
-
-            const new_post = new this.savedModel({
-                savedPost: savedPost,
-                post_type: type,
-                member: mb_id
-            });
-            const result = await new_post.save();
-
-            assert.ok(result, Definer.post_error4);
-
-            return result;
-        } catch(err) {
-            throw err;
-        }
-    };
-
-    async getAllSavedPostsData() {
-        try {
-            const allSavedPhotos = await this.savedModel.aggregate([
-                {
-                    $lookup: {
-                        from: "photos", // Photo model nomi
-                        localField: "savedPost",
-                        foreignField: "_id",
-                        as: "photo" // Natija massiv nomi
-                    }
-                },
-                {
-                    $project: {
-                        member: 1,
-                        photo: { $arrayElemAt: ["$photo", 0] }
-                    }
-                }
-            ]);
-    
-            return allSavedPhotos;
-        } catch (err) {
-            throw err;
-        }
-    };    
 };
 
 module.exports = Post;

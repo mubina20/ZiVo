@@ -87,40 +87,10 @@ router.get(
     memberController.retrieveAuthMember,
     postController.getAllPosts
 );
-router.get(
-    "/post/all-stories",
-    memberController.retrieveAuthMember,
-    postController.getAllStories
-);
-router.post(
-    "/post/all-videoPosts",
-    memberController.retrieveAuthMember,
-    postController.getAllVideoPosts
-);
-router.post(
-    "/post/all-articlePosts",
-    memberController.retrieveAuthMember,
-    postController.getAllArticlePosts
-);
-router.post(
-    "/post/all-photoPosts",
-    memberController.retrieveAuthMember,
-    postController.getAllPhotoPosts
-);
 router.post(
     "/post/edit",
     memberController.retrieveAuthMember,
     postController.editPost
-);
-router.post(
-    "/post/saved",
-    memberController.retrieveAuthMember,
-    postController.savedPost
-);
-router.get(
-    "/post/all-savedPosts",
-    memberController.retrieveAuthMember,
-    postController.getAllSavedPosts
 );
 
 //** FOLLOWING related routers **//
