@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # PRODUCTION
-chmod a+x deploy.sh
 git checkout master
 git reset --hard
 git pull origin master
