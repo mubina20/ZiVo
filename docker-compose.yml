@@ -1,25 +1,25 @@
-version: '3.3'
+# version: '3.3'
 
-services:
-  node:
-    container_name: zivo_backend
-    restart: always
-    image: node:16.10.0
-    ports:
-      - "3003:3003"  
-    volumes:
-      - ./:/usr/src/app 
-    working_dir: /usr/src/app  
+# services:
+#   node:
+#     container_name: zivo_backend
+#     restart: always
+#     image: node:16.10.0
+#     ports:
+#       - "3003:3003"  
+#     volumes:
+#       - ./:/usr/src/app 
+#     working_dir: /usr/src/app  
   
-    networks:
-      - zivo_network
+#     networks:
+#       - zivo_network
 
-    # PRODUCTION
-    command: bash -c "npm install && npm run start:prod"
+#     # PRODUCTION
+#     command: bash -c "npm install && npm run start:prod"
 
-    # DEVELOPMENT
-    # command: bash -c "npm install && npm run dev"
+#     # DEVELOPMENT
+#     # command: bash -c "npm install && npm run dev"
 
-networks:
-  zivo_network:
-    driver: bridge  
+# networks:
+#   zivo_network:
+#     driver: bridge  
