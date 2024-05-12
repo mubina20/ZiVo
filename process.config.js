@@ -4,7 +4,7 @@ module.exports = {
             name: "ZIVO",
             cwd: "./",
             script: "./server.js",
-            watch: true,
+            watch: false,
             env_production: {
                 NODE_ENV: "procution",
             },
